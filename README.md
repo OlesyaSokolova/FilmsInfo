@@ -1,2 +1,5 @@
 # FilmsInfo
-This app provides user with information about the films that he added to the list.
+This application provides the user with information about films that were added to the list earlier.
+
+# Stack & Libraries
+...
