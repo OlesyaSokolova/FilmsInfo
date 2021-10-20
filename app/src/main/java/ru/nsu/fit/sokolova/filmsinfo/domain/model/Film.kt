@@ -1,3 +1,5 @@
 package ru.nsu.fit.sokolova.filmsinfo.domain.model
 
-class Film {}
+class Film {
+    //film in the list
+}
