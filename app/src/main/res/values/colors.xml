@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!--TODO: rename colors-->
     <color name="primary">#D15DEF</color>
     <color name="secondary">#6AEFE4</color>
 

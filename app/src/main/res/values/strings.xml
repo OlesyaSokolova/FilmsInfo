@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FilmsInfo</string>
+    <string name="btnAddContentDesc">Button for adding films</string>
 </resources>
