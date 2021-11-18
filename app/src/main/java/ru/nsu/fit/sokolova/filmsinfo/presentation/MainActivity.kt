@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         inputDialog = FilmInutDialog(
             context = this,
             view = inputDialogView,
-            onSaveButtonClick = saveFilm,
+            onSearchButtonClick = searchFilm,
         )
 
         addFilmButton = findViewById(R.id.btnAddFilm)
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    val saveFilm = View.OnClickListener {
+    val searchFilm = View.OnClickListener {
         val filTitle = inputDialog.getUserInput()
         inputDialog.dismiss()
         films.add(Film(filTitle, false))

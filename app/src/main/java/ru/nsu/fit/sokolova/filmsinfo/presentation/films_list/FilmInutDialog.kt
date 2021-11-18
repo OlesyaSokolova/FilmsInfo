@@ -10,7 +10,7 @@ import ru.nsu.fit.sokolova.filmsinfo.R
 class FilmInutDialog(
     context: Context,
     view: View,
-    onSaveButtonClick: View.OnClickListener
+    onSearchButtonClick: View.OnClickListener
 ) : Dialog(context)
 {
     private var userInput: EditText
@@ -26,8 +26,8 @@ class FilmInutDialog(
         userInput = view.findViewById<EditText>(R.id.etFilmTitle)
         userInput.requestFocus()
 
-        val btnSave = view.findViewById<Button>(R.id.btnFilmInputSave)
-        btnSave.setOnClickListener(onSaveButtonClick)
+        val btnSave = view.findViewById<Button>(R.id.btnFilmInputSearch)
+        btnSave.setOnClickListener(onSearchButtonClick)
 
         val btnCancel = view.findViewById<Button>(R.id.btnFilmInputCancel)
         btnCancel.setOnClickListener{

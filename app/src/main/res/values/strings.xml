@@ -3,6 +3,6 @@
     <string name="btnAddContentDesc">Button for adding films</string>
     <string name="input_film_title">Input film title</string>
     <string name="film_input_cancel">Cancel</string>
-    <string name="save">Save</string>
+    <string name="search">Search</string>
     <string name="input_film_dialog_hint">Enter film title</string>
 </resources>
