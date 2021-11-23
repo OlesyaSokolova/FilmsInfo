@@ -5,7 +5,7 @@ import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 
 interface FilmsRepository {
-	fun getFilmInfo(title: String): Flow<Resource<List<FilmInfo>>>
+	fun getFilmInfo(id: Int): Flow<Resource<FilmInfo>>
 	fun getFilmsList(): Flow<Resource<List<FilmInfo>>>
-
+	fun searchFilm(title: String): Flow<Resource<List<FilmInfo>>>
 }

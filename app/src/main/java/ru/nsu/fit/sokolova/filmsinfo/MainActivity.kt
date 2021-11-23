@@ -1,4 +1,4 @@
-package ru.nsu.fit.sokolova.filmsinfo.presentation
+package ru.nsu.fit.sokolova.filmsinfo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
