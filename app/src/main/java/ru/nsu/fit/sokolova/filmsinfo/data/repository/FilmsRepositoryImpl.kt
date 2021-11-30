@@ -6,7 +6,6 @@ import retrofit2.HttpException
 import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import ru.nsu.fit.sokolova.filmsinfo.data.local.FilmInfoDao
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.IMDbApi
-import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.domain.repository.FilmsRepository
 import java.io.IOException
 
