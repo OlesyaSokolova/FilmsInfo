@@ -4,13 +4,13 @@ import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
 
 data class FilmDto(
     val description: String,
-    val id: String,
+    val id: String,//imdbId
     val image: String,
     val resultType: String,
     val title: String
 )
 
-fun FilmDto.toSearchFilm(): SearchedFilm {
+fun FilmDto.toSearchedFilm(): SearchedFilm {
     return SearchedFilm(
         description = description,
         id = id,

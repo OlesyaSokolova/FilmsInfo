@@ -69,5 +69,6 @@ fun TitleDto.toFilmInfoEntity(): FilmInfoEntity{
         countries = countries,
         languages = languages,
         imDbRating = imDbRating,
+        isWatched = false//TODO: add some check here
     )
 }

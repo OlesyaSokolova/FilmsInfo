@@ -10,5 +10,5 @@ data class SearchDto(
 )
 
 fun SearchDto.toSearchedFilms(): List<SearchedFilm> {
-    return results.map { it.toSearchResult() }
+    return results.map { it.toSearchedFilm() }
 }

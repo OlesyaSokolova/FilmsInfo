@@ -6,9 +6,10 @@ import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 
 @Entity
 data class FilmInfoEntity(
-	@PrimaryKey(autoGenerate = true) val id: Int? = null,
-	val imdbTitleId: String,
-	val title: String,
+	//some fields should not be updated
+	@PrimaryKey(autoGenerate = true) val id: Int? = null,////const
+	val imdbTitleId: String,////const
+	val title: String,////const
 	val originalTitle: String,
 	val fullTitle: String,
 	val type: String,
@@ -22,9 +23,10 @@ data class FilmInfoEntity(
 	val countries: String,
 	val languages: String,
 	val imDbRating: String,
+	val isWatched: Boolean////const
 
 ) {
-	fun toTitleInfo(): FilmInfo {
+	fun toFilmInfo(): FilmInfo {
 		return FilmInfo(
 			id = imdbTitleId,
 			title = title,
@@ -41,6 +43,7 @@ data class FilmInfoEntity(
 			countries = countries,
 			languages = languages,
 			imDbRating = imDbRating,
+			isWatched = isWatched
 		)
 	}
 }
