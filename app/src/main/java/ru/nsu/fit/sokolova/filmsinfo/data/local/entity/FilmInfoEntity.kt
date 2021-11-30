@@ -28,7 +28,8 @@ data class FilmInfoEntity(
 ) {
 	fun toFilmInfo(): FilmInfo {
 		return FilmInfo(
-			id = imdbTitleId,
+			id = id,
+			imdbTitleId = imdbTitleId,
 			title = title,
 			originalTitle = originalTitle,
 			fullTitle = fullTitle,

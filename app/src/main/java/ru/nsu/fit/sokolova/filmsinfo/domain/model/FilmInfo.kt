@@ -3,23 +3,23 @@ package ru.nsu.fit.sokolova.filmsinfo.domain.model
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.title.*
 
 data class FilmInfo(
-	val id: String,
+	val id: Int?,
 	val imdbTitleId: String,
 	val title: String,
-	val originalTitle: String?,
-	val fullTitle: String?,
-	val type: String?,
-	val year: String?,
-	val runtimeStr: String?,
-	val image: String?,
-	val plot: String?,
-	val directors: String?,
-	val stars: String?,
-	val genres: String?,
-	val countries: String?,
-	val languages: String?,
-	val imDbRating: String?,
-	val isWatched: Boolean
+	val originalTitle: String? = null,
+	val fullTitle: String? = null,
+	val type: String? = null,
+	val year: String? = null,
+	val runtimeStr: String? = null,
+	val image: String? = null,
+	val plot: String? = null,
+	val directors: String? = null,
+	val stars: String? = null,
+	val genres: String? = null,
+	val countries: String? = null,
+	val languages: String? = null,
+	val imDbRating: String? = null,
+	var isWatched: Boolean
 ) {
 	fun hasNoEnoughInfo(): Boolean {
 		return (originalTitle == null

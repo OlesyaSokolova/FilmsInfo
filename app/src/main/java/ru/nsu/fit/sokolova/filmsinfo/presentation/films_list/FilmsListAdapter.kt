@@ -8,8 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.Film
+import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 
-class FilmsListAdapter(private val films: List<Film>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FilmsListAdapter(private val films: List<FilmInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater

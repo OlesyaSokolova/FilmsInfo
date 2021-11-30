@@ -6,14 +6,17 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
 import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.Film
+import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.presentation.films_list.FilmInutDialog
 import ru.nsu.fit.sokolova.filmsinfo.presentation.films_list.FilmsListAdapter
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val films = ArrayList<Film>()
+    private val films = ArrayList<FilmInfo>()
     private lateinit var listAdapter: FilmsListAdapter
     private lateinit var addFilmButton: FloatingActionButton
     private lateinit var inputDialog: FilmInutDialog
@@ -53,17 +56,20 @@ class MainActivity : AppCompatActivity() {
     val searchFilm = View.OnClickListener {
         val filTitle = inputDialog.getUserInput()
         inputDialog.dismiss()
-        films.add(Film(filTitle, false))
+        //films.add(Film(filTitle, false))
         listAdapter.notifyItemInserted(listAdapter.itemCount)
     }
 
 
     private fun initData()
     {
-        films.add(Film("film1", false))
+       /* films.add(Film("film1", false))
         films.add(Film("film2", false))
         films.add(Film("film3", true))
         films.add(Film("film4", false))
-        films.add(Film("film5", false))
+        films.add(Film("film5", false))*/
+        films.add(FilmInfo(id = 6, title = "hello",
+                           imdbTitleId = "ttt56663", isWatched = false))
+
     }
 }
