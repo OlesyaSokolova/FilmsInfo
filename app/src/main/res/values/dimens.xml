@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="primary_text_size">15sp</dimen>
+    <dimen name="primary_text_size">16sp</dimen>
     <dimen name="film_thumbnail_padding">3dp</dimen>
     <dimen name="marginFAB">32dp</dimen>
+    <dimen name="secondary_text_size">8sp</dimen>
     <item name="tv_film_title_hb" type="dimen" format="float">0.1</item>
     <item name="tv_film_title_vb" type="dimen" format="float">0.5</item>
 </resources>

@@ -9,6 +9,6 @@ class GetFilmsListUseCase (
 	private val repository: FilmsRepository
 ) {
 	operator fun invoke(): Flow<Resource<List<FilmInfo>>> {
-		return repository.getFilmsList()
+		return repository.getFilmList()
 	}
 }

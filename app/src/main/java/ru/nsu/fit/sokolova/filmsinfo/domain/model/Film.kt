@@ -1,6 +1,0 @@
-package ru.nsu.fit.sokolova.filmsinfo.domain.model
-
-class Film (
-    val title: String,
-    var isWatched: Boolean
-)

@@ -8,9 +8,9 @@ interface FilmInfoDao {
 //TODO: check that info about isWathced is not replaced
 	/*@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun insertFilmInfos(infos: List<FilmInfoEntity>)*/
-
+//todo: dont forget to add "suspend"
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	suspend fun insertFilmInfo(info: FilmInfoEntity)
+	fun insertFilmInfo(info: FilmInfoEntity)
 
 	@Update
 	suspend fun updateFilmInfo(info: FilmInfoEntity)

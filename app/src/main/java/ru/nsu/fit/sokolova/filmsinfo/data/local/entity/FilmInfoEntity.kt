@@ -10,20 +10,20 @@ data class FilmInfoEntity(
 	@PrimaryKey(autoGenerate = true) val id: Int? = null,////const
 	val imdbTitleId: String,////const
 	val title: String,////const
-	val originalTitle: String,
-	val fullTitle: String,
-	val type: String,
-	val year: String,
-	val runtimeStr: String,
-	val image: String,
-	val plot: String,
-	val directors: String,
-	val stars: String,
-	val genres: String,
-	val countries: String,
-	val languages: String,
-	val imDbRating: String,
-	val isWatched: Boolean////const
+	val originalTitle: String? = null,
+	val fullTitle: String? = null,
+	val type: String? = null,
+	val year: String? = null,
+	val runtimeStr: String? = null,
+	val image: String? = null,
+	val plot: String? = null,
+	val directors: String? = null,
+	val stars: String? = null,
+	val genres: String? = null,
+	val countries: String? = null,
+	val languages: String? = null,
+	val imDbRating: String? = null,
+	val isWatched: Boolean////const//TODO: add default value
 
 ) {
 	fun toFilmInfo(): FilmInfo {

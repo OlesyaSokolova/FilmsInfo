@@ -1,4 +1,4 @@
-package ru.nsu.fit.sokolova.filmsinfo.presentation.films_list
+package ru.nsu.fit.sokolova.filmsinfo.presentation.film_list
 
 import android.app.Dialog
 import android.content.Context
@@ -39,6 +39,4 @@ class FilmInutDialog(
         userInput.getText().clear()
         super.dismiss()
     }
-
-
 }

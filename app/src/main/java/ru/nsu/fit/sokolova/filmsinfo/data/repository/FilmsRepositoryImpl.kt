@@ -1,10 +1,12 @@
 package ru.nsu.fit.sokolova.filmsinfo.data.repository
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import ru.nsu.fit.sokolova.filmsinfo.data.local.FilmInfoDao
+import ru.nsu.fit.sokolova.filmsinfo.data.local.entity.FilmInfoEntity
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.IMDbApi
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.search.toSearchedFilms
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.title.toFilmInfoEntity
@@ -56,10 +58,14 @@ class FilmsRepositoryImpl(
 		}
 	}
 
-	override fun getFilmsList(): Flow<Resource<List<FilmInfo>>> = flow {
+	override fun getFilmList(): Flow<Resource<List<FilmInfo>>> = flow {
 		emit(Resource.Loading())
 		val filmsList = dao.getAll().map { it.toFilmInfo() }
 		emit(Resource.Success(filmsList))
+	}
+
+	override fun saveFilm(filmInfo: FilmInfo){
+		dao.insertFilmInfo(filmInfo.toFilmInfoEntity())
 	}
 
 	override fun searchFilm(title: String): Flow<Resource<List<SearchedFilm>>> = flow {
@@ -69,6 +75,7 @@ class FilmsRepositoryImpl(
 		try {
 			//get remote film info
 			val searchedFilms = api.search(title).toSearchedFilms()
+			//Log.d("filmtest", searchedFilms.toString())
 			emit(Resource.Success(searchedFilms))
 
 		}

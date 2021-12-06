@@ -1,4 +1,4 @@
-package ru.nsu.fit.sokolova.filmsinfo.presentation.films_list
+package ru.nsu.fit.sokolova.filmsinfo.presentation.film_list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +7,9 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
-import ru.nsu.fit.sokolova.filmsinfo.domain.model.Film
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 
-class FilmsListAdapter(private val films: List<FilmInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FilmListAdapter(private val films: List<FilmInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater
@@ -18,6 +17,7 @@ class FilmsListAdapter(private val films: List<FilmInfo>) : RecyclerView.Adapter
             .inflate(R.layout.film_thumbnail, parent, false)
         return FilmViewHolder(view)
     //TODO: add onClick to every film (pass it to FilmViewHolder as an argument)
+        //onClick is known - open FilmInfoFradment
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

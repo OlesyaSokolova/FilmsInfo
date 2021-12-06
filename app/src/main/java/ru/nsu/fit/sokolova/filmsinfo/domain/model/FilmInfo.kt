@@ -1,5 +1,6 @@
 package ru.nsu.fit.sokolova.filmsinfo.domain.model
 
+import ru.nsu.fit.sokolova.filmsinfo.data.local.entity.FilmInfoEntity
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.title.*
 
 data class FilmInfo(
@@ -35,5 +36,26 @@ data class FilmInfo(
 				|| countries == null
 				|| languages == null
 				|| imDbRating == null)
+	}
+
+	fun toFilmInfoEntity(): FilmInfoEntity {
+		return FilmInfoEntity(
+			imdbTitleId = imdbTitleId,
+			title = title,
+			originalTitle = originalTitle,
+			fullTitle = fullTitle,
+			type = type,
+			year = year,
+			runtimeStr = runtimeStr,
+			image = image,
+			plot = plot,
+			directors = directors,
+			stars = stars,
+			genres = genres,
+			countries = countries,
+			languages = languages,
+			imDbRating = imDbRating,
+			isWatched = isWatched
+		)
 	}
 }
