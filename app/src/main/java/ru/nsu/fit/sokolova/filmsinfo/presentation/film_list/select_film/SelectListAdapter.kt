@@ -9,15 +9,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
 
-class SelectListAdapter(private val searchedFilms: List<SearchedFilm>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SelectListAdapter(
+	private val searchedFilms: List<SearchedFilm>,
+	private val onSelectedFilmClick: (SearchedFilm) -> View.OnClickListener
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		val view = LayoutInflater
 			.from(parent.context)
 			.inflate(R.layout.searched_film, parent, false)
 		return SearchResultViewHolder(view)
-		//TODO: add onClick to every film - save film to db (and get more info)
-		//onClick is known - open FilmInfoFradment
 	}
 
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -26,6 +27,10 @@ class SelectListAdapter(private val searchedFilms: List<SearchedFilm>) : Recycle
 
 		val description = holder.itemView.findViewById<CheckBox>(R.id.tvSearchedFilmDesc)
 		description.text = searchedFilms[position].description
+
+		//TODO: add onClick to every film - save film to db - do it better, write directly to db, use view model
+
+		holder.itemView.setOnClickListener(onSelectedFilmClick(searchedFilms[position]))
 	}
 
 	override fun getItemCount(): Int {

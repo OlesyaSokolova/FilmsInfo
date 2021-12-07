@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
+import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
 import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.GetFilmsListUseCase
 import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.SearchFilmUseCase
 import javax.inject.Inject
@@ -41,20 +42,23 @@ class FilmListViewModel @Inject constructor(
 		return getFilmListUseCase.invoke()
 	}*/
 
-	fun onSearch(title: String) {
+	fun searchByTitle(title: String): List<SearchedFilm>? {
+		var test: List<SearchedFilm>? = null
 		searchFilmUseCase(title).onEach { result ->
 			when(result) {
 				is Resource.Success -> {
-					val test = result.data
+					 test = result.data
 				}
 				is Resource.Error -> {
-					val test = 2;
+					 test = null;
 				}
 				is Resource.Loading -> {
-					val test = result.data
+					test = result.data
 				}
 			}
 		}.launchIn(viewModelScope)
+		return test
+		//return emptyList()
 	}
 
 }

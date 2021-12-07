@@ -13,7 +13,7 @@ data class FilmDto(
 fun FilmDto.toSearchedFilm(): SearchedFilm {
     return SearchedFilm(
         description = description,
-        id = id,
+        imdbTitleId = id,
         title = title
     )
 }

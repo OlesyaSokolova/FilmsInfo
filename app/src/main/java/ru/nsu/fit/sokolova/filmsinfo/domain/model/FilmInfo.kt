@@ -4,7 +4,7 @@ import ru.nsu.fit.sokolova.filmsinfo.data.local.entity.FilmInfoEntity
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.title.*
 
 data class FilmInfo(
-	val id: Int?,
+	val id: Int? = null,
 	val imdbTitleId: String,
 	val title: String,
 	val originalTitle: String? = null,
@@ -20,7 +20,7 @@ data class FilmInfo(
 	val countries: String? = null,
 	val languages: String? = null,
 	val imDbRating: String? = null,
-	var isWatched: Boolean
+	var isWatched: Boolean = false
 ) {
 	fun hasNoEnoughInfo(): Boolean {
 		return (originalTitle == null

@@ -24,6 +24,9 @@ class FilmListAdapter(private val films: List<FilmInfo>) : RecyclerView.Adapter<
         val title = holder.itemView.findViewById<TextView>(R.id.tvFilmTitle)
         title.text = films[position].title
 
+        val description = holder.itemView.findViewById<TextView>(R.id.tvFilmDescription)
+        description.text = films[position].year + "," + films[position].type
+
         val isWatched = holder.itemView.findViewById<CheckBox>(R.id.cbWatched)
         isWatched.setOnCheckedChangeListener { buttonView, isChecked ->
             films[position].isWatched = isChecked
