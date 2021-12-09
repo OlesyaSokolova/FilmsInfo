@@ -10,7 +10,7 @@ interface FilmInfoDao {
 	suspend fun insertFilmInfos(infos: List<FilmInfoEntity>)*/
 //todo: dont forget to add "suspend"
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	fun insertFilmInfo(info: FilmInfoEntity)
+	suspend fun insertFilmInfo(info: FilmInfoEntity)
 
 	@Update
 	suspend fun updateFilmInfo(info: FilmInfoEntity)
@@ -40,6 +40,6 @@ interface FilmInfoDao {
 	suspend fun getAll(): List<FilmInfoEntity>
 
 	//user clicks at film title in the list: id is known parameter
-	@Query("SELECT * FROM filminfoentity WHERE id = :id LIMIT 1")
-	suspend fun getFilmInfo(id: Int): FilmInfoEntity
+	@Query("SELECT * FROM filminfoentity WHERE imdbTitleId = :imdbTitleId LIMIT 1")
+	suspend fun getFilmInfoByImdbTitleId(imdbTitleId: String): FilmInfoEntity
 }

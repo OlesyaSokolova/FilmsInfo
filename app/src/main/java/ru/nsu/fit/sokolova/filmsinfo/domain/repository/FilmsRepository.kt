@@ -6,8 +6,8 @@ import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
 
 interface FilmsRepository {
-	fun getFilmInfo(id: Int): Flow<Resource<FilmInfo>>
+	fun getFilmInfo(imdbTitleId: String): Flow<Resource<FilmInfo>>
 	fun getFilmList(): Flow<Resource<List<FilmInfo>>>
-	fun saveFilm(filmInfo: FilmInfo)
+	fun addFilm(filmInfo: FilmInfo)
 	fun searchFilm(title: String): Flow<Resource<List<SearchedFilm>>>
 }

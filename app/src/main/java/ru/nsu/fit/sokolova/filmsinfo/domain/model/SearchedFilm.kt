@@ -11,6 +11,17 @@ data class SearchedFilm(
 			imdbTitleId = imdbTitleId,
 		)
 	}
+
+	fun toFilmInList(): FilmInList {
+		return FilmInList(
+			imdbTitleId = imdbTitleId,
+			title = title,
+			type = null,
+			year = null,
+			description = description,
+			isWatched = false
+		)
+	}
 }
 
 

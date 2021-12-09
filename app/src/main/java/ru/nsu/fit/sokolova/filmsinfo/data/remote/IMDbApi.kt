@@ -12,7 +12,7 @@ interface IMDbApi {
 	 ): SearchDto
 
 	@GET("/" + LANG + "/API/Title/"+ API_KEY + "/{id}")
-	suspend fun getInfoByTitleId(
+	suspend fun getFilmInfoByImdbTitleId(
 		@Path("id") id: String
 	): TitleDto
 

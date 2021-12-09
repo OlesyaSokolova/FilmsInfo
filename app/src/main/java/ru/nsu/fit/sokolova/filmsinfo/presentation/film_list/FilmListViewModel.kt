@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.onEach
 import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
+import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.AddFilmUseCase
 import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.GetFilmsListUseCase
 import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.SearchFilmUseCase
 import javax.inject.Inject
@@ -16,25 +17,29 @@ import javax.inject.Inject
 @HiltViewModel
 class FilmListViewModel @Inject constructor(
 	private val getFilmListUseCase: GetFilmsListUseCase,
-	private val searchFilmUseCase: SearchFilmUseCase
+	private val searchFilmUseCase: SearchFilmUseCase,
+	private val addFilmUseCase: AddFilmUseCase
 ): ViewModel()
 {
 	private var filmList: MutableLiveData<List<FilmInfo>> = MutableLiveData()
+	//private val _state = mu
 
 	init {
-		 getFilmListUseCase().onEach { result ->
+		getFilmListUseCase().onEach { result ->
 			when(result) {
 				is Resource.Success -> {
-					filmList.value = result.data
+					filmList.value = result.data ?: emptyList()
 				}
-				is Resource.Error -> {
-					val test = 2;
+				is Resource.Failure -> {
+					//show toast with failure
+					filmList.value = emptyList()
 				}
 				is Resource.Loading -> {
-					filmList.value = result.data
+					//show loading bar
+					//filmList.value = result.data
 				}
 			}
-		}.launchIn(viewModelScope)
+		}
 	}
 
 	fun getFilmList() = filmList
@@ -42,23 +47,32 @@ class FilmListViewModel @Inject constructor(
 		return getFilmListUseCase.invoke()
 	}*/
 
-	fun searchByTitle(title: String): List<SearchedFilm>? {
-		var test: List<SearchedFilm>? = null
-		searchFilmUseCase(title).onEach { result ->
-			when(result) {
-				is Resource.Success -> {
-					 test = result.data
-				}
-				is Resource.Error -> {
-					 test = null;
-				}
-				is Resource.Loading -> {
-					test = result.data
+	fun searchByTitle(title: String): List<SearchedFilm> {
+		var searchResult = emptyList<SearchedFilm>()
+			searchFilmUseCase(title)
+			.onEach { result ->
+				when(result) {
+					is Resource.Success -> {
+						searchResult = result.data ?: emptyList()
+					}
+					is Resource.Failure -> {
+						//show toast with failure
+						filmList.value = emptyList()
+					}
+					is Resource.Loading -> {
+						//show loading bar
+						//filmList.value = result.data
+					}
 				}
 			}
-		}.launchIn(viewModelScope)
-		return test
-		//return emptyList()
+		return searchResult
+	}
+
+	fun addFilm(selectedFilm: SearchedFilm) {
+		val filmInfo = selectedFilm.toFilmInfo()
+		//filmList.value?.toMutableList()?.add(filmInfo)
+		//listAdapter.notifyItemInserted(listAdapter.itemCount)
+		addFilmUseCase.invoke(filmInfo)
 	}
 
 }

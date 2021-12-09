@@ -12,6 +12,7 @@ import ru.nsu.fit.sokolova.filmsinfo.data.local.FilmsDatabase
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.IMDbApi
 import ru.nsu.fit.sokolova.filmsinfo.data.repository.FilmsRepositoryImpl
 import ru.nsu.fit.sokolova.filmsinfo.domain.repository.FilmsRepository
+import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.AddFilmUseCase
 import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.GetFilmInfoUseCase
 import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.GetFilmsListUseCase
 import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.SearchFilmUseCase
@@ -38,6 +39,12 @@ object FilmInfoModule {
 	@Singleton
 	fun provideSearchFilmUseCase(repository: FilmsRepository): SearchFilmUseCase {
 		return SearchFilmUseCase(repository)
+	}
+
+	@Provides
+	@Singleton
+	fun provideAddFilmUseCase(repository: FilmsRepository): AddFilmUseCase {
+		return AddFilmUseCase(repository)
 	}
 
 	@Provides

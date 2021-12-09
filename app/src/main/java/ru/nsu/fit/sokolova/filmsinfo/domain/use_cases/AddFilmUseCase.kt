@@ -1,14 +1,12 @@
 package ru.nsu.fit.sokolova.filmsinfo.domain.use_cases
 
-import kotlinx.coroutines.flow.Flow
-import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.domain.repository.FilmsRepository
 
-class GetFilmInfoUseCase (
+class AddFilmUseCase (
 	private val repository: FilmsRepository
 ) {
-	operator fun invoke(imdbTitleId: String): Flow<Resource<FilmInfo>> {
-		return repository.getFilmInfo(imdbTitleId)
+	operator fun invoke(filmInfo: FilmInfo) {
+		return repository.addFilm(filmInfo)
 	}
 }

@@ -20,7 +20,7 @@ import ru.nsu.fit.sokolova.filmsinfo.presentation.film_list.select_film.SelectFi
 import ru.nsu.fit.sokolova.filmsinfo.presentation.film_list.select_film.SelectListAdapter
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity1 : AppCompatActivity() {
     private val viewModel: FilmListViewModel by viewModels()
     private var films = ArrayList<FilmInfo>()
     private lateinit var listAdapter: FilmListAdapter
@@ -52,49 +52,29 @@ class MainActivity : AppCompatActivity() {
                 val selectDialogView =
                     getLayoutInflater().inflate(R.layout.select_film_dialog, null)
                 if (searchedFilms != null) {
-                    //убрать флоу - иначе открывается пустой диалог. Переделать SelectDialog
-                    val searchedFilmsAdapter = SelectListAdapter(searchedFilms, { selectedFilm: SearchedFilm  -> View.OnClickListener {
-                        //get selected film
-                        //val selectedFilm = selectFilmDialog.getUserSelection()
-                        selectFilmDialog.dismiss()
-                        //add selected film
-                        films.add(selectedFilm.toFilmInfo())
-                        listAdapter.notifyItemInserted(listAdapter.itemCount)
-                    }})
-                    val searchedFilmsView = selectDialogView.findViewById<RecyclerView>(R.id.rvSearchedFilms)
-                    //searchedFilms?.adapter = searchedFilmsAdapter
-                    //searchedFilms.layoutManager = LinearLayoutManager(this)
+                    val searchedFilmsAdapter =
+                        SelectListAdapter(searchedFilms, { selectedFilm: SearchedFilm ->
+                            View.OnClickListener {
+                                //get selected film - here it is
+                                //val selectedFilm = selectFilmDialog.getUserSelection()
+                                viewModel.addFilm(selectedFilm)
+                                listAdapter.notifyItemInserted(listAdapter.itemCount)
+                                selectFilmDialog.dismiss()
+                                //add selected film
+                                //films.add(selectedFilm.toFilmInfo())
+                                listAdapter.notifyItemInserted(listAdapter.itemCount)
+                            }
+                        })
+                    val searchedFilmsView =
+                        selectDialogView.findViewById<RecyclerView>(R.id.rvSearchedFilms)
+                    searchedFilmsView?.adapter = searchedFilmsAdapter
+                    searchedFilmsView.layoutManager = LinearLayoutManager(this)
+                    searchedFilmsView.scrollToPosition(0)
 
-                    val alertDialog = AlertDialog.Builder(this)
-                    alertDialog.setView(selectDialogView)
-                    alertDialog.setTitle(R.string.select_searched_film)
-                    searchedFilmsView.adapter = searchedFilmsAdapter
-                    searchedFilmsView.scrollToPosition(searchedFilmsAdapter.itemCount - 1)
-                    alertDialog.show()
-
-
-                    /* selectFilmDialog = SelectFilmDialog(
-						 context = this,
-						 view = selectDialogView,
-						 optionsToSelect = searchedFilms,
-						 onSelectedFilmClick = { selectedFilm: SearchedFilm  -> View.OnClickListener {
-							 //get selected film
-							 //val selectedFilm = selectFilmDialog.getUserSelection()
-							 selectFilmDialog.dismiss()
-							 //add selected film
-							 films.add(selectedFilm.toFilmInfo())
-							 listAdapter.notifyItemInserted(listAdapter.itemCount)
-						 }
-											   },
-					 )*/
-                    /* val builder = AlertDialog.Builder(this)
-					 builder.setTitle(R.string.select_searched_film)
-					 builder.setItems(searchedFilms)*/
-                    //selectFilmDialog.show()
+                    selectFilmDialog.show()
                 }
-            }
+            })
 
-        )
 
         addFilmButton = findViewById(R.id.btnAddFilm)
         addFilmButton.setOnClickListener {
