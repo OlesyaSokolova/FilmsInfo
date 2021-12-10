@@ -3,11 +3,9 @@ package ru.nsu.fit.sokolova.filmsinfo.presentation.film_list.select_film
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
-import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
 
 class SelectFilmDialog(
 	private var dialogContext: Context,
@@ -19,13 +17,13 @@ class SelectFilmDialog(
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		val selectDialogView = getLayoutInflater().inflate(R.layout.select_film_dialog, null)
-		val searchedFilmsView =
+		val searchedFilmsRecyclerView =
 			selectDialogView.findViewById<RecyclerView>(R.id.rvSearchedFilms)
 		setTitle("SELECT FILM!!!!!!!")
-		searchedFilmsView?.adapter = adapter
-		searchedFilmsView.layoutManager = LinearLayoutManager(dialogContext)
-		searchedFilmsView.scrollToPosition(adapter.itemCount - 1)
-		setContentView(searchedFilmsView)
+		searchedFilmsRecyclerView?.adapter = adapter
+		searchedFilmsRecyclerView.layoutManager = LinearLayoutManager(dialogContext)
+		searchedFilmsRecyclerView.scrollToPosition(adapter.itemCount - 1)
+		setContentView(selectDialogView)
 	}
 
 
