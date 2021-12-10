@@ -4,7 +4,7 @@ import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
 
 data class FilmDto(
     val description: String,
-    val id: String,//imdbId
+    val id: String,//imdbTitleId
     val image: String,
     val resultType: String,
     val title: String

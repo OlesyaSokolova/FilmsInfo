@@ -21,7 +21,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object FilmInfoModule {
+object AppModule {
 
 	@Provides
 	@Singleton

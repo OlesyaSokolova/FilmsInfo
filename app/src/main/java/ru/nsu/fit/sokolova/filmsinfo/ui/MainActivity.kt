@@ -10,19 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import ru.nsu.fit.sokolova.filmsinfo.R
-import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
-import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
-import ru.nsu.fit.sokolova.filmsinfo.presentation.film_details.FilmInfoFragment
-import ru.nsu.fit.sokolova.filmsinfo.presentation.film_list.FilmInutDialog
-import ru.nsu.fit.sokolova.filmsinfo.presentation.film_list.FilmListViewModel
-import ru.nsu.fit.sokolova.filmsinfo.presentation.film_list.select_film.SelectFilmDialog
-import ru.nsu.fit.sokolova.filmsinfo.presentation.film_list.select_film.SelectListAdapter
+import ru.nsu.fit.sokolova.filmsinfo.ui.film_details.FilmInfoFragment
+import ru.nsu.fit.sokolova.filmsinfo.ui.input_film_dialog.FilmInutDialog
+import ru.nsu.fit.sokolova.filmsinfo.presentation.MainViewModel
+import ru.nsu.fit.sokolova.filmsinfo.ui.select_film_dialog.SelectFilmDialog
+import ru.nsu.fit.sokolova.filmsinfo.ui.select_film_dialog.SelectListAdapter
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-	private val viewModel: FilmListViewModel by viewModels()
+	private val viewModel: MainViewModel by viewModels()
 	private var films = arrayListOf<FilmInList>()
 	private lateinit var mainAdapter: MainAdapter
 	private lateinit var addFilmButton: FloatingActionButton

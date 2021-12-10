@@ -1,10 +1,9 @@
-package ru.nsu.fit.sokolova.filmsinfo.presentation.film_list.select_film
+package ru.nsu.fit.sokolova.filmsinfo.ui.select_film_dialog
 
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
