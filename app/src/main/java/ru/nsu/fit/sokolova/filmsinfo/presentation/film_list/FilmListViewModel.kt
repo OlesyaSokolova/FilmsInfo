@@ -76,9 +76,10 @@ class FilmListViewModel @Inject constructor(
 	}
 
 		fun addFilm(selectedFilm: SearchedFilm) {
-			val filmInfo = selectedFilm.toFilmInfo()
+			val filmInList = selectedFilm.toFilmInList()
+			ArrayList(filmList.value).add(filmInList)
 			//filmList.value?.toMutableList()?.add(filmInfo)
 			//listAdapter.notifyItemInserted(listAdapter.itemCount)
-			addFilmUseCase.invoke(filmInfo)
+			addFilmUseCase.invoke(selectedFilm.toFilmInfo())
 		}
 	}

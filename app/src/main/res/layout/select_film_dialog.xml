@@ -14,7 +14,9 @@
         android:layout_height="wrap_content"
         android:hint="@string/input_film_dialog_hint"
         android:text="Select film"
+        android:textSize="@dimen/primary_text_size"
         android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/rvSearchedFilms"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

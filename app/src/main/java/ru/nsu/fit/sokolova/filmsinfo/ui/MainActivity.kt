@@ -49,9 +49,12 @@ class MainActivity : AppCompatActivity() {
 						val searchedFilmsAdapter =
 							SelectListAdapter(searchedFilms, { selectedFilm: SearchedFilm ->
 								View.OnClickListener {
+									//add -> in viewModel
+									films.add(selectedFilm.toFilmInList())
 									viewModel.addFilm(selectedFilm)
-									mainAdapter.notifyItemInserted(mainAdapter.itemCount)
 									selectFilmDialog.dismiss()
+									mainAdapter.setFilmList(viewModel.getFilmList().value?: emptyList())
+									val test = viewModel.getFilmList().value?: emptyList()
 									mainAdapter.notifyItemInserted(mainAdapter.itemCount)
 								}
 							})
@@ -85,6 +88,7 @@ class MainActivity : AppCompatActivity() {
 			//progressBar.showIf { result is Resource.Loading
 			it?.let {
 				val filmsList = findViewById<RecyclerView>(R.id.rvFilms)
+				films = ArrayList(it)
 				filmsList?.adapter = mainAdapter
 				mainAdapter.setFilmList(it)
 				filmsList.layoutManager = LinearLayoutManager(this)
