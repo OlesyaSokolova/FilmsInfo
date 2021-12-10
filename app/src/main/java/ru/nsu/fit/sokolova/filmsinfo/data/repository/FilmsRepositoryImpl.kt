@@ -10,6 +10,7 @@ import ru.nsu.fit.sokolova.filmsinfo.data.local.FilmInfoDao
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.IMDbApi
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.search.toSearchedFilms
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.title.toFilmInfoEntity
+import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
 import ru.nsu.fit.sokolova.filmsinfo.domain.repository.FilmsRepository
@@ -39,8 +40,8 @@ class FilmsRepositoryImpl(
 		emit(Resource.Success(updatedFilmInfos))
 	}
 
-	override fun getFilmList(): Flow<Resource<List<FilmInfo>>> = flow {
-		val filmsList = localDataSource.getAll().map { it.toFilmInfo() }
+	override fun getFilmList(): Flow<Resource<List<FilmInList>>> = flow {
+		val filmsList = localDataSource.getAll().map { it.toFilmInList() }
 		emit(Resource.Success(filmsList))
 	}
 

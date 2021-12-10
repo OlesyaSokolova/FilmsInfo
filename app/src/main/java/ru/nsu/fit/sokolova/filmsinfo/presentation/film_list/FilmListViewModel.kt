@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.nsu.fit.sokolova.filmsinfo.common.Resource
+import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
 import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.AddFilmUseCase
@@ -21,7 +22,7 @@ class FilmListViewModel @Inject constructor(
 	private val addFilmUseCase: AddFilmUseCase
 ): ViewModel()
 {
-	private var filmList: MutableLiveData<List<FilmInfo>> = MutableLiveData()
+	private var filmList: MutableLiveData<List<FilmInList>> = MutableLiveData()
 	private var searchResult: MutableLiveData<List<SearchedFilm>> = MutableLiveData()
 
 	//private val _state = mu

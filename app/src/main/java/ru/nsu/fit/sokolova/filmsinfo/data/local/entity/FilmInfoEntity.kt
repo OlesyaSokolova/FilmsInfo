@@ -2,6 +2,7 @@ package ru.nsu.fit.sokolova.filmsinfo.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 
 @Entity
@@ -45,6 +46,17 @@ data class FilmInfoEntity(
 			languages = languages,
 			imDbRating = imDbRating,
 			isWatched = isWatched
+		)
+	}
+
+	fun toFilmInList(): FilmInList {
+		return FilmInList(
+			imdbTitleId = imdbTitleId,
+			title = title,
+			type = null,
+			year = null,
+			//description = description,
+			isWatched = false
 		)
 	}
 }

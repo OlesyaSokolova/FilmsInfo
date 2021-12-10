@@ -23,7 +23,7 @@ import ru.nsu.fit.sokolova.filmsinfo.presentation.film_list.select_film.SelectLi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 	private val viewModel: FilmListViewModel by viewModels()
-	private var films = ArrayList<FilmInfo>()
+	private var films = arrayListOf<FilmInList>()
 	private lateinit var mainAdapter: MainAdapter
 	private lateinit var addFilmButton: FloatingActionButton
 	private lateinit var inputDialog: FilmInutDialog
@@ -45,34 +45,25 @@ class MainActivity : AppCompatActivity() {
 				//progressBar.showIf { result is Resource.Loading
 				it?.let {
 					searchedFilms = ArrayList(it)
+					if (!searchedFilms.isEmpty()) {
+						val searchedFilmsAdapter =
+							SelectListAdapter(searchedFilms, { selectedFilm: SearchedFilm ->
+								View.OnClickListener {
+									viewModel.addFilm(selectedFilm)
+									mainAdapter.notifyItemInserted(mainAdapter.itemCount)
+									selectFilmDialog.dismiss()
+									mainAdapter.notifyItemInserted(mainAdapter.itemCount)
+								}
+							})
+
+						selectFilmDialog = SelectFilmDialog(dialogContext = this@MainActivity, searchedFilmsAdapter)
+						selectFilmDialog.show()
+					}
 				}
 			})
 			//val searchedFilms = viewModel.searchByTitle(filmTitle)
-			/*val selectDialogView = getLayoutInflater().inflate(R.layout.select_film_dialog, null)
-			if (!searchedFilms.isEmpty()) {
-				val searchedFilmsAdapter =
-					SelectListAdapter(searchedFilms, { selectedFilm: SearchedFilm ->
-						View.OnClickListener {
-							//get selected film - here it is
-							//val selectedFilm = selectFilmDialog.getUserSelection()
-							viewModel.addFilm(selectedFilm)
-							mainAdapter.notifyItemInserted(mainAdapter.itemCount)
-							selectFilmDialog.dismiss()
-							//add selected film
-							//films.add(selectedFilm.toFilmInfo())
-							mainAdapter.notifyItemInserted(mainAdapter.itemCount)
-						}
-					})
-				val searchedFilmsView =
-					selectDialogView.findViewById<RecyclerView>(R.id.rvSearchedFilms)
-				searchedFilmsView?.adapter = searchedFilmsAdapter
-				searchedFilmsView.layoutManager = LinearLayoutManager(this)
-				searchedFilmsView.scrollToPosition(0)
 
-				selectFilmDialog.show()
-			}*/
 		})
-
 
 		addFilmButton = findViewById(R.id.btnAddFilm)
 		addFilmButton.setOnClickListener {
@@ -81,12 +72,6 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun initData() {
-		viewModel.getFilmList().observe(this, Observer {
-			//progressBar.showIf { result is Resource.Loading
-			it?.let {
-				films = ArrayList(it)
-			}
-		})
 
 		mainAdapter = MainAdapter(this, itemClickListener = object: MainAdapter.OnSelectedFilmClickListener  {
 			override fun onSelectedFilmClick(filmInList: FilmInList) {
@@ -95,13 +80,20 @@ class MainActivity : AppCompatActivity() {
 					.beginTransaction()
 					.replace(R.id.fragmentHolder, fragment, "film detailed info")
 			}
-
-
 		})
-		val filmsList = findViewById<RecyclerView>(R.id.rvFilms)
-		filmsList?.adapter = mainAdapter
-		filmsList.layoutManager = LinearLayoutManager(this)
-		filmsList.scrollToPosition(mainAdapter.itemCount - 1)
+		viewModel.getFilmList().observe(this, Observer {
+			//progressBar.showIf { result is Resource.Loading
+			it?.let {
+				val filmsList = findViewById<RecyclerView>(R.id.rvFilms)
+				filmsList?.adapter = mainAdapter
+				mainAdapter.setFilmList(it)
+				filmsList.layoutManager = LinearLayoutManager(this)
+				filmsList.scrollToPosition(mainAdapter.itemCount - 1)
+			}
+		})
+
+
+
 		//val films2 = viewModel.getFilmsList()
 
 		/* films.add(Film("film1", false))

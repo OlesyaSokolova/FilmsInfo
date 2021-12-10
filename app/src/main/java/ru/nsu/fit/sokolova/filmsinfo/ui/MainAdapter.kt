@@ -1,6 +1,5 @@
 package ru.nsu.fit.sokolova.filmsinfo.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +9,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
-import java.text.FieldPosition
+import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 
 class MainAdapter (
 	private val context: Context,
 	private val itemClickListener: OnSelectedFilmClickListener
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-	private var filmList = listOf<FilmInList>()
+	private var filmList = emptyList<FilmInList>()
 
 	interface OnSelectedFilmClickListener {
 		fun onSelectedFilmClick(filmInList: FilmInList)
@@ -41,8 +40,8 @@ class MainAdapter (
 
 		val description = holder.itemView.findViewById<TextView>(R.id.tvFilmDescription)
 		//change to film description
-		description.text =  filmList[position].description
-		//description.text = filmList[position].year + "," + filmList[position].type
+		//description.text =  filmList[position].description
+		description.text = filmList[position].year + "," + filmList[position].type
 
 		val isWatched = holder.itemView.findViewById<CheckBox>(R.id.cbWatched)
 		isWatched.setOnCheckedChangeListener { buttonView, isChecked ->

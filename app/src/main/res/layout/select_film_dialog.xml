@@ -3,19 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="10dp"
     android:layout_height="wrap_content"
-    tools:context=".MainActivity">
+    android:padding="10dp"
+
+    tools:context=".ui.MainActivity">
+
+    <TextView
+        android:id="@+id/etFilmTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/input_film_dialog_hint"
+        android:text="Select film"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearchedFilms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/searched_film"/>
+        tools:layout_editor_absoluteX="10dp"
+        tools:layout_editor_absoluteY="20dp"
+        tools:listitem="@layout/searched_film" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

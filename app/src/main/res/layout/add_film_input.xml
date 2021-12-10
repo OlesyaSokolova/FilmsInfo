@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
+        android:textSize="@dimen/primary_text_size"
         android:hint="@string/input_film_dialog_hint"
         app:layout_constraintBottom_toTopOf="@+id/btnFilmInputSearch"
         app:layout_constraintEnd_toEndOf="parent"
