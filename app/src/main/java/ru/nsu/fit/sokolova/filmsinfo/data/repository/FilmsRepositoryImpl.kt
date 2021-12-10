@@ -1,7 +1,9 @@
 package ru.nsu.fit.sokolova.filmsinfo.data.repository
 
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import ru.nsu.fit.sokolova.filmsinfo.data.local.FilmInfoDao
@@ -43,17 +45,14 @@ class FilmsRepositoryImpl(
 	}
 
 	override fun addFilm(filmInfo: FilmInfo) {
-		localDataSource.insertFilmInfo(filmInfo.toFilmInfoEntity())
+		GlobalScope.launch { localDataSource.insertFilmInfo(filmInfo.toFilmInfoEntity()) }
 	}
 
 	override fun searchFilm(title: String): Flow<Resource<List<SearchedFilm>>> = flow {
-		var searchedFilms: List<SearchedFilm>? = null;
-		//first we search for the films with the title from server
+		var searchedFilms: List<SearchedFilm>?  = null
 		try {
 			//get remote film info
 			searchedFilms = remoteDataSource.search(title).toSearchedFilms()
-			//Log.d("filmtest", searchedFilms.toString())
-
 		}
 		catch (e: Exception) {
 			emit(Resource.Failure(e))

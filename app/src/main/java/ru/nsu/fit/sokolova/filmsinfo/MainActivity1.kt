@@ -1,3 +1,4 @@
+/*
 package ru.nsu.fit.sokolova.filmsinfo
 
 import androidx.appcompat.app.AppCompatActivity
@@ -81,23 +82,31 @@ class MainActivity1 : AppCompatActivity() {
             inputDialog.show()
         }
     }
-    /*val searchFilm = View.OnClickListener {
+    */
+/*val searchFilm = View.OnClickListener {
         selectFilmDialog.show()
-        *//*val filTitle = inputDialog.getUserInput()
+        *//*
+*/
+/*val filTitle = inputDialog.getUserInput()
         inputDialog.dismiss()
         val test = viewModel.onSearch(filTitle)
 
         //films.add(Film(filTitle, false))
         listAdapter.notifyItemInserted(listAdapter.itemCount)*//*
-    }*/
+*/
+/*
+    }*//*
 
-   /* val addFilm = View.OnClickListener {
+
+   */
+/* val addFilm = View.OnClickListener {
         //get selected film
         selectFilmDialog.dismiss()
         //add selected film
         //films.add(FilmInfo(filTitle, false))
         listAdapter.notifyItemInserted(listAdapter.itemCount)
-    }*/
+    }*//*
+
 
 
 
@@ -115,12 +124,14 @@ class MainActivity1 : AppCompatActivity() {
         filmsList.scrollToPosition(listAdapter.itemCount - 1)
         //val films2 = viewModel.getFilmsList()
 
-       /* films.add(Film("film1", false))
+       */
+/* films.add(Film("film1", false))
         films.add(Film("film2", false))
         films.add(Film("film3", true))
         films.add(Film("film4", false))
-        films.add(Film("film5", false))*/
+        films.add(Film("film5", false))*//*
+
         //films.add(FilmInfo(id = 6, title = "hello",
                            //imdbTitleId = "ttt56663", isWatched = false))
     }
-}
+}*/

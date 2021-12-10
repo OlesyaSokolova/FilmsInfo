@@ -40,7 +40,14 @@ class MainActivity : AppCompatActivity() {
 		inputDialog = FilmInutDialog(context = this, view = inputDialogView, onSearchButtonClick = {
 			val filmTitle = inputDialog.getUserInput();
 			inputDialog.dismiss()
-			val searchedFilms = viewModel.searchByTitle(filmTitle)
+			var searchedFilms = ArrayList<SearchedFilm>()
+			viewModel.getSearchResult(filmTitle).observe(this, Observer {
+				//progressBar.showIf { result is Resource.Loading
+				it?.let {
+					searchedFilms = ArrayList(it)
+				}
+			})
+			//val searchedFilms = viewModel.searchByTitle(filmTitle)
 			/*val selectDialogView = getLayoutInflater().inflate(R.layout.select_film_dialog, null)
 			if (!searchedFilms.isEmpty()) {
 				val searchedFilmsAdapter =
@@ -86,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 				val fragment = FilmInfoFragment.newInstance(imdbTitleId = filmInList.imdbTitleId)
 				supportFragmentManager
 					.beginTransaction()
-					.replace(R.id.root_layout, fragment, "film detailed info")
+					.replace(R.id.fragmentHolder, fragment, "film detailed info")
 			}
 
 

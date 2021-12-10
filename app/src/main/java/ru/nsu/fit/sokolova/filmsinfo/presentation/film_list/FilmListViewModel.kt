@@ -22,6 +22,8 @@ class FilmListViewModel @Inject constructor(
 ): ViewModel()
 {
 	private var filmList: MutableLiveData<List<FilmInfo>> = MutableLiveData()
+	private var searchResult: MutableLiveData<List<SearchedFilm>> = MutableLiveData()
+
 	//private val _state = mu
 
 	init {
@@ -39,7 +41,7 @@ class FilmListViewModel @Inject constructor(
 					//filmList.value = result.data
 				}
 			}
-		}
+		}.launchIn(viewModelScope)
 	}
 
 	fun getFilmList() = filmList
@@ -47,32 +49,35 @@ class FilmListViewModel @Inject constructor(
 		return getFilmListUseCase.invoke()
 	}*/
 
-	fun searchByTitle(title: String): List<SearchedFilm> {
-		var searchResult = emptyList<SearchedFilm>()
+	fun searchByTitle(title: String)  {
+		//var searchResult = emptyList<SearchedFilm>()
 			searchFilmUseCase(title)
 			.onEach { result ->
 				when(result) {
 					is Resource.Success -> {
-						searchResult = result.data ?: emptyList()
+						searchResult.value = result.data
 					}
 					is Resource.Failure -> {
 						//show toast with failure
-						filmList.value = emptyList()
+						searchResult.value = emptyList()
 					}
 					is Resource.Loading -> {
 						//show loading bar
 						//filmList.value = result.data
 					}
 				}
-			}
+			}.launchIn(viewModelScope)
+		//return searchResult
+	}
+	fun getSearchResult(title: String): MutableLiveData<List<SearchedFilm>> {
+		searchByTitle(title);
 		return searchResult
 	}
 
-	fun addFilm(selectedFilm: SearchedFilm) {
-		val filmInfo = selectedFilm.toFilmInfo()
-		//filmList.value?.toMutableList()?.add(filmInfo)
-		//listAdapter.notifyItemInserted(listAdapter.itemCount)
-		addFilmUseCase.invoke(filmInfo)
+		fun addFilm(selectedFilm: SearchedFilm) {
+			val filmInfo = selectedFilm.toFilmInfo()
+			//filmList.value?.toMutableList()?.add(filmInfo)
+			//listAdapter.notifyItemInserted(listAdapter.itemCount)
+			addFilmUseCase.invoke(filmInfo)
+		}
 	}
-
-}
