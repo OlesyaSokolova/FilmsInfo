@@ -9,6 +9,7 @@ data class SearchedFilm(
 		return FilmInfo(
 			title = title,
 			imdbTitleId = imdbTitleId,
+			description = description
 		)
 	}
 
@@ -18,7 +19,7 @@ data class SearchedFilm(
 			title = title,
 			type = null,
 			year = null,
-			//description = description,
+			description = description,
 			isWatched = false
 		)
 	}

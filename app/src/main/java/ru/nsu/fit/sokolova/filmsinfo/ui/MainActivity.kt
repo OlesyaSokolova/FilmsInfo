@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 	private val viewModel: MainViewModel by viewModels()
 	private var films = arrayListOf<FilmInList>()
 	private lateinit var mainAdapter: MainAdapter
+	private lateinit var selectListAdapter: SelectListAdapter
 	private lateinit var addFilmButton: FloatingActionButton
 	private lateinit var inputDialog: FilmInutDialog
 	private lateinit var selectFilmDialog: SelectFilmDialog
@@ -44,20 +45,20 @@ class MainActivity : AppCompatActivity() {
 				it?.let {
 					searchedFilms = ArrayList(it)
 					if (!searchedFilms.isEmpty()) {
-						val searchedFilmsAdapter =
-							SelectListAdapter(searchedFilms, { selectedFilm: SearchedFilm ->
+						selectListAdapter =
+							SelectListAdapter({ selectedFilm: SearchedFilm ->
 								View.OnClickListener {
 									//add -> in viewModel
-									films.add(selectedFilm.toFilmInList())
+									//films.add(selectedFilm.toFilmInList())
 									viewModel.addFilm(selectedFilm)
 									selectFilmDialog.dismiss()
 									mainAdapter.setFilmList(viewModel.getFilmList().value?: emptyList())
-									val test = viewModel.getFilmList().value?: emptyList()
 									mainAdapter.notifyItemInserted(mainAdapter.itemCount)
 								}
 							})
+						selectListAdapter.setFilmList(searchedFilms)
 
-						selectFilmDialog = SelectFilmDialog(dialogContext = this@MainActivity, searchedFilmsAdapter)
+						selectFilmDialog = SelectFilmDialog(dialogContext = this@MainActivity, selectListAdapter)
 						selectFilmDialog.show()
 					}
 				}
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
 	private fun initData() {
 
-		mainAdapter = MainAdapter(this, itemClickListener = object: MainAdapter.OnSelectedFilmClickListener  {
+		mainAdapter = MainAdapter(itemClickListener = object: MainAdapter.OnSelectedFilmClickListener  {
 			override fun onSelectedFilmClick(filmInList: FilmInList) {
 				val fragment = FilmInfoFragment.newInstance(imdbTitleId = filmInList.imdbTitleId)
 				supportFragmentManager
@@ -93,17 +94,5 @@ class MainActivity : AppCompatActivity() {
 				filmsList.scrollToPosition(mainAdapter.itemCount - 1)
 			}
 		})
-
-
-
-		//val films2 = viewModel.getFilmsList()
-
-		/* films.add(Film("film1", false))
-		 films.add(Film("film2", false))
-		 films.add(Film("film3", true))
-		 films.add(Film("film4", false))
-		 films.add(Film("film5", false))*/
-		//films.add(FilmInfo(id = 6, title = "hello",
-		//imdbTitleId = "ttt56663", isWatched = false))
 	}
 }

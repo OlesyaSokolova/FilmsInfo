@@ -7,6 +7,7 @@ data class FilmInfo(
 	val id: Int? = null,
 	val imdbTitleId: String,
 	val title: String,
+	val description: String,
 	val originalTitle: String? = null,
 	val fullTitle: String? = null,
 	val type: String? = null,
@@ -42,6 +43,7 @@ data class FilmInfo(
 		return FilmInfoEntity(
 			imdbTitleId = imdbTitleId,
 			title = title,
+			description = description,
 			originalTitle = originalTitle,
 			fullTitle = fullTitle,
 			type = type,

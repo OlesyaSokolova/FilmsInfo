@@ -56,6 +56,7 @@ fun TitleDto.toFilmInfoEntity(): FilmInfoEntity{
     return FilmInfoEntity(
         imdbTitleId = id,
         title = title,
+        description = "",//TODO: don't update description that is already in db
         originalTitle = originalTitle,
         fullTitle = fullTitle,
         type = type,
@@ -69,6 +70,5 @@ fun TitleDto.toFilmInfoEntity(): FilmInfoEntity{
         countries = countries,
         languages = languages,
         imDbRating = imDbRating,
-        isWatched = false//TODO: add some check here
     )
 }

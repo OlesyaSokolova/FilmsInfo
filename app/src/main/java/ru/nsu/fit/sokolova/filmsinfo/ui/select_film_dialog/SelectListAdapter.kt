@@ -7,11 +7,23 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
+import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 
 class SelectListAdapter(
-	private val searchedFilms: List<SearchedFilm>,
+	//private val searchedFilms: List<SearchedFilm>,
 	private val onSelectedFilmClick: (SearchedFilm) -> View.OnClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+	private var searchedFilms = emptyList<SearchedFilm>()
+
+	fun setFilmList(searchedFilms: List<SearchedFilm>) {
+		this.searchedFilms = searchedFilms
+		notifyDataSetChanged()
+	}
+
+	fun clearSelectionList() {
+		this.searchedFilms = emptyList<SearchedFilm>()
+		notifyDataSetChanged()
+	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		val view = LayoutInflater
@@ -29,12 +41,15 @@ class SelectListAdapter(
 
 		//TODO: add onClick to every film - save film to db - do it better, write directly to db, use view model
 
-		holder.itemView.setOnClickListener(onSelectedFilmClick(searchedFilms[position]))
+		holder.itemView.setOnClickListener {
+			onSelectedFilmClick(searchedFilms[position])
+		}
 	}
 
 	override fun getItemCount(): Int {
 		return searchedFilms.size
 	}
+
 
 	inner class SearchResultViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 }
