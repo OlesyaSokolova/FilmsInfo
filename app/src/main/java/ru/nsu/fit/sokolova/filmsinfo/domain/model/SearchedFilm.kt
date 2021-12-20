@@ -5,14 +5,6 @@ data class SearchedFilm(
 	val imdbTitleId: String,
 	val title: String
 ) {
-	fun toFilmInfo(): FilmInfo {
-		return FilmInfo(
-			title = title,
-			imdbTitleId = imdbTitleId,
-			description = description
-		)
-	}
-
 	fun toFilmInList(): FilmInList {
 		return FilmInList(
 			imdbTitleId = imdbTitleId,

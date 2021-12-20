@@ -10,5 +10,6 @@ interface FilmsRepository {
 	fun getFilmInfo(imdbTitleId: String): Flow<Resource<FilmInfo>>
 	fun getFilmList(): Flow<Resource<List<FilmInList>>>
 	fun addFilm(filmInfo: FilmInfo)
+	fun updateFilmStatus(imdbTitleId: String, isWatched: Boolean)
 	fun searchFilm(title: String): Flow<Resource<List<SearchedFilm>>>
 }

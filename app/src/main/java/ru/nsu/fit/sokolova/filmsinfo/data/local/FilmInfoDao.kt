@@ -42,4 +42,7 @@ interface FilmInfoDao {
 	//user clicks at film title in the list: id is known parameter
 	@Query("SELECT * FROM filminfoentity WHERE imdbTitleId = :imdbTitleId LIMIT 1")
 	suspend fun getFilmInfoByImdbTitleId(imdbTitleId: String): FilmInfoEntity
+
+	@Query("UPDATE filminfoentity SET isWatched = :isWatched WHERE imdbTitleId = :imdbTitleId")
+	suspend fun updateFilmStatus(imdbTitleId: String, isWatched: Boolean)
 }

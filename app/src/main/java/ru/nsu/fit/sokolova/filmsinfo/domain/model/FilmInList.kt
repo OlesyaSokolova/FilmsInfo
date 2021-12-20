@@ -9,4 +9,13 @@ data class FilmInList(
 	val title: String,
 	val year: String?,
 	var isWatched: Boolean
-)
+) {
+	fun toFilmInfo(): FilmInfo {
+		return FilmInfo(
+			title = title,
+			imdbTitleId = imdbTitleId,
+			description = description,
+			isWatched = isWatched
+		)
+	}
+}

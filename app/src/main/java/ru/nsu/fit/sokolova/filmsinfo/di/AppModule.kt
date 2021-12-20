@@ -12,10 +12,7 @@ import ru.nsu.fit.sokolova.filmsinfo.data.local.FilmsDatabase
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.IMDbApi
 import ru.nsu.fit.sokolova.filmsinfo.data.repository.FilmsRepositoryImpl
 import ru.nsu.fit.sokolova.filmsinfo.domain.repository.FilmsRepository
-import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.AddFilmUseCase
-import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.GetFilmInfoUseCase
-import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.GetFilmsListUseCase
-import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.SearchFilmUseCase
+import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.*
 import javax.inject.Singleton
 
 
@@ -31,8 +28,8 @@ object AppModule {
 
 	@Provides
 	@Singleton
-	fun provideGetFilmsListUseCase(repository: FilmsRepository): GetFilmsListUseCase {
-		return GetFilmsListUseCase(repository)
+	fun provideGetFilmsListUseCase(repository: FilmsRepository): GetFilmListUseCase {
+		return GetFilmListUseCase(repository)
 	}
 
 	@Provides
@@ -45,6 +42,12 @@ object AppModule {
 	@Singleton
 	fun provideAddFilmUseCase(repository: FilmsRepository): AddFilmUseCase {
 		return AddFilmUseCase(repository)
+	}
+
+	@Provides
+	@Singleton
+	fun provideUpdateFilmStatusUseCase(repository: FilmsRepository): UpdateFilmStatusUseCase {
+		return UpdateFilmStatusUseCase(repository)
 	}
 
 	@Provides

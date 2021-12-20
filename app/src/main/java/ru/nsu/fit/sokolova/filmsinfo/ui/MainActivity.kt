@@ -80,6 +80,11 @@ class MainActivity : AppCompatActivity() {
 					.beginTransaction()
 					.replace(R.id.fragmentHolder, fragment, "film detailed info")
 			}
+		},
+		{ imdbTitleId: String, isWatched: Boolean ->
+			run {
+				viewModel.setFilmAsWatched(imdbTitleId, isWatched)
+			}
 		})
 		viewModel.getFilmList().observe(this, Observer {
 			//progressBar.showIf { result is Resource.Loading

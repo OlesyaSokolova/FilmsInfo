@@ -41,12 +41,16 @@ class FilmsRepositoryImpl(
 	}
 
 	override fun getFilmList(): Flow<Resource<List<FilmInList>>> = flow {
-		val filmsList = localDataSource.getAll().map { it.toFilmInList() }
-		emit(Resource.Success(filmsList))
+		val filmList = localDataSource.getAll().map { it.toFilmInList() }
+		emit(Resource.Success(filmList))
 	}
 
 	override fun addFilm(filmInfo: FilmInfo) {
 		GlobalScope.launch { localDataSource.insertFilmInfo(filmInfo.toFilmInfoEntity()) }
+	}
+
+	override fun updateFilmStatus(imdbTitleId: String, isWatched: Boolean) {
+		GlobalScope.launch { localDataSource.updateFilmStatus(imdbTitleId, isWatched) }
 	}
 
 	override fun searchFilm(title: String): Flow<Resource<List<SearchedFilm>>> = flow {

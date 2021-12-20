@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
+import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
 
 class MainAdapter (
-	private val itemClickListener: OnSelectedFilmClickListener
+	private val itemClickListener: OnSelectedFilmClickListener,
+	private val onCheckedChangeListener: (imdbTitleId: String, isWatched: Boolean) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	private var filmList = emptyList<FilmInList>()
 
@@ -35,16 +37,19 @@ class MainAdapter (
 
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 		val title = holder.itemView.findViewById<TextView>(R.id.tvFilmTitle)
-		title.text = filmList[position].title
+		val currentFilm = filmList[position]
+		title.setText(currentFilm.title)
 
 		val description = holder.itemView.findViewById<TextView>(R.id.tvFilmDescription)
 		//change to film description
-		description.text =  filmList[position].description
+		description.setText(currentFilm.description)
 		//description.text = filmList[position].year + "," + filmList[position].type
 
 		val isWatched = holder.itemView.findViewById<CheckBox>(R.id.cbWatched)
-		isWatched.setOnCheckedChangeListener { buttonView, isChecked ->
+		isWatched.setChecked(currentFilm.isWatched)
+		isWatched.setOnCheckedChangeListener { _, isChecked ->
 			filmList[position].isWatched = isChecked
+			onCheckedChangeListener(filmList[position].imdbTitleId, isChecked)
 		}
 		holder.itemView.setOnClickListener {
 			itemClickListener.onSelectedFilmClick(filmList[position])
