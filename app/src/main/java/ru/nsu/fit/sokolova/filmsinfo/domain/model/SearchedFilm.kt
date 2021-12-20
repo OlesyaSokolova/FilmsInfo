@@ -9,8 +9,6 @@ data class SearchedFilm(
 		return FilmInList(
 			imdbTitleId = imdbTitleId,
 			title = title,
-			type = null,
-			year = null,
 			description = description,
 			isWatched = false
 		)

@@ -8,7 +8,7 @@ import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 @Entity
 data class FilmInfoEntity(
 	//some fields should not be updated
-	@PrimaryKey(autoGenerate = true) val id: Int? = null,////const
+	@PrimaryKey(autoGenerate = true) val id: Int? = null,//const
 	val imdbTitleId: String,////const
 	val title: String,////const
 	val description: String,//const
@@ -25,7 +25,7 @@ data class FilmInfoEntity(
 	val countries: String? = null,
 	val languages: String? = null,
 	val imDbRating: String? = null,
-	var isWatched: Boolean = false// add default value
+	var isWatched: Boolean = false
 
 ) {
 	fun toFilmInfo(): FilmInfo {
@@ -55,8 +55,6 @@ data class FilmInfoEntity(
 		return FilmInList(
 			imdbTitleId = imdbTitleId,
 			title = title,
-			type = null,
-			year = null,
 			description = description,
 			isWatched = isWatched
 		)

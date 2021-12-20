@@ -31,7 +31,6 @@ class FilmInfoViewModel @Inject constructor(
 				}
 				is Resource.Loading -> {
 					//show loading bar
-					//filmList.value = result.data
 				}
 			}
 		}.launchIn(viewModelScope)
@@ -40,5 +39,10 @@ class FilmInfoViewModel @Inject constructor(
 	fun getFilmInfo(imdbTitleId: String): MutableLiveData<FilmInfo> {
 		loadFilmInfo(imdbTitleId)
 		return filmInfo
+	}
+
+	fun getFilmInfoData(imdbTitleId: String): FilmInfo? {
+		loadFilmInfo(imdbTitleId)
+		return filmInfo.value
 	}
 }

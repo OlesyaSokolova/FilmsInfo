@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 		if(savedInstanceState == null) {
 			supportFragmentManager
 				.beginTransaction()
-				.add(R.id.fragmentHolder, mainFragment, "main fragment")
+				.replace(R.id.fragmentHolder, mainFragment, "main fragment")
 				.addToBackStack(null)
 				.commit()
 		}
@@ -28,6 +28,15 @@ class MainActivity : AppCompatActivity() {
 		supportFragmentManager
 			.beginTransaction()
 			.replace(R.id.fragmentHolder, fragment, tag)
+			.addToBackStack(null)
 			.commit()
+	}
+
+	fun returnToPreviousFragment() {
+		if (supportFragmentManager.getBackStackEntryCount() > 0) {
+			supportFragmentManager.popBackStack();
+		} else {
+			super.onBackPressed();
+		}
 	}
 }
