@@ -25,7 +25,7 @@ data class FilmInfoEntity(
 	val countries: String? = null,
 	val languages: String? = null,
 	val imDbRating: String? = null,
-	val isWatched: Boolean = false// add default value
+	var isWatched: Boolean = false// add default value
 
 ) {
 	fun toFilmInfo(): FilmInfo {

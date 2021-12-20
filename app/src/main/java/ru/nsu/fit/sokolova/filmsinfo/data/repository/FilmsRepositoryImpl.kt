@@ -30,14 +30,17 @@ class FilmsRepositoryImpl(
 			try {
 				//get remote film info
 				val remoteFilmInfo = remoteDataSource.getFilmInfoByImdbTitleId(filmInfo.imdbTitleId)
-				localDataSource.updateFilmInfo(remoteFilmInfo.toFilmInfoEntity())
+				var newEntity = remoteFilmInfo.toFilmInfoEntity()
+				newEntity.isWatched = filmInfo.isWatched
+				localDataSource.deleteByImdbTitleId(filmInfo.imdbTitleId)
+				localDataSource.insertFilmInfo(newEntity)
+				val updatedFilmInfos =  localDataSource.getFilmInfoByImdbTitleId(imdbTitleId).toFilmInfo()
+				emit(Resource.Success(updatedFilmInfos))
 			}
 			catch (e: Exception) {
 				emit(Resource.Failure(e))
 			}
 		}
-		val updatedFilmInfos =  localDataSource.getFilmInfoByImdbTitleId(imdbTitleId).toFilmInfo()
-		emit(Resource.Success(updatedFilmInfos))
 	}
 
 	override fun getFilmList(): Flow<Resource<List<FilmInList>>> = flow {

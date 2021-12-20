@@ -19,6 +19,9 @@ interface FilmInfoDao {
 	@Query("DELETE FROM filminfoentity WHERE title IN(:titles) ")
 	suspend fun delete(titles: List<String>)
 
+	@Query("DELETE FROM filminfoentity WHERE imdbTitleId = :imdbTitleId ")
+	suspend fun deleteByImdbTitleId(imdbTitleId: String)
+
 	//Fields: id, imdbTitleId, title and isWatched are not deleted
 	@Query("UPDATE	filminfoentity SET " +
 				   "originalTitle = null," +

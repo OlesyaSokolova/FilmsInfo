@@ -2,8 +2,10 @@ package ru.nsu.fit.sokolova.filmsinfo.ui
 
 import android.os.Bundle
 import android.view.View
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,8 +29,6 @@ class MainActivity : AppCompatActivity() {
 	private lateinit var addFilmButton: FloatingActionButton
 	private lateinit var inputDialog: FilmInutDialog
 	private lateinit var selectFilmDialog: SelectFilmDialog
-
-	//private lateinit var addFilmInput:
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -75,10 +75,13 @@ class MainActivity : AppCompatActivity() {
 
 		mainAdapter = MainAdapter(itemClickListener = object: MainAdapter.OnSelectedFilmClickListener  {
 			override fun onSelectedFilmClick(filmInList: FilmInList) {
+				findViewById<FrameLayout>(R.id.fragmentHolder).removeAllViews()
 				val fragment = FilmInfoFragment.newInstance(imdbTitleId = filmInList.imdbTitleId)
-				supportFragmentManager
-					.beginTransaction()
-					.replace(R.id.fragmentHolder, fragment, "film detailed info")
+				val transaction = supportFragmentManager.beginTransaction()
+				transaction.add(R.id.fragmentHolder, fragment, "film detailed info")
+				transaction.disallowAddToBackStack()//TODO
+				transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+				transaction.commit()
 			}
 		},
 		{ imdbTitleId: String, isWatched: Boolean ->
