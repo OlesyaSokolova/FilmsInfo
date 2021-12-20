@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,27 +12,28 @@ import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
-
 import ru.nsu.fit.sokolova.filmsinfo.presentation.film_details.FilmInfoViewModel
+import ru.nsu.fit.sokolova.filmsinfo.ui.MainActivity
+import ru.nsu.fit.sokolova.filmsinfo.ui.MainFragment
+
 
 @AndroidEntryPoint
 class FilmInfoFragment : Fragment() {
-
-	private val UNKNOWN_CONTENT: String = "unknown"//TODO: create const
-	private val DELIMITER: String = ": "//TODO: create const
 	private val viewModel: FilmInfoViewModel by viewModels()
 
-	 companion object {
-		 private const val IMDB_TITLE_ID_KEY = "imdb_title_id"
+	companion object {
+		private const val IMDB_TITLE_ID_KEY = "imdb_title_id"
+		private const val UNKNOWN_CONTENT: String = "unknown"
+		private const val DELIMITER: String = ": "
 
-	 	fun newInstance(imdbTitleId: String): FilmInfoFragment {
+		fun newInstance(imdbTitleId: String): FilmInfoFragment {
 			val args = Bundle()
 			args.putString(IMDB_TITLE_ID_KEY, imdbTitleId)
 			val instance = FilmInfoFragment()
 			instance.arguments = args
-	 		return instance
-	 	}
-	 }
+			return instance
+		}
+	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -41,6 +43,11 @@ class FilmInfoFragment : Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		val backButton = view.findViewById<Button>(R.id.btnBack)
+		backButton.setOnClickListener {
+			val fragment = MainFragment()
+			(activity as MainActivity).replaceFragment(fragment, "film detailed info") }
+
 		val imdbTitleId = arguments?.getString(IMDB_TITLE_ID_KEY);
 		if(imdbTitleId != null) {
 			var filmInfo: FilmInfo
@@ -67,7 +74,7 @@ class FilmInfoFragment : Fragment() {
 					textToSet = if(filmInfo.year == null) UNKNOWN_CONTENT else filmInfo.year.toString()
 					year.setText((textLabel + DELIMITER + textToSet))
 
-					val countries = view.findViewById<TextView>(R.id.tvCountries)
+					val countries = view.findViewById<TextView>(ru.nsu.fit.sokolova.filmsinfo.R.id.tvCountries)
 					textLabel = "Countries"
 					textToSet = if(filmInfo.countries == null) UNKNOWN_CONTENT else filmInfo.countries.toString()
 					countries.setText((textLabel + DELIMITER + textToSet))

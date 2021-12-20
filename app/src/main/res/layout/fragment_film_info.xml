@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_margin="10dp"
-    android:layout_height="match_parent"
-    android:background="@color/primary">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/llImgAndInfo"
@@ -33,43 +31,55 @@
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:padding="5dp"
+                android:padding="@dimen/tv_film_info_padding"
+                android:textSize="@dimen/secondary_text_size"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/searched_film_border" />
 
             <TextView
                 android:id="@+id/tvYear"
-                android:padding="5dp"
+                android:padding="@dimen/tv_film_info_padding"
+                android:textSize="@dimen/secondary_text_size"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/searched_film_border" />
 
             <TextView
                 android:id="@+id/tvType"
-                android:padding="5dp"
+                android:padding="@dimen/tv_film_info_padding"
+                android:textSize="@dimen/secondary_text_size"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/searched_film_border" />
 
             <TextView
                 android:id="@+id/tvRating"
-                android:padding="5dp"
+                android:padding="@dimen/tv_film_info_padding"
+                android:textSize="@dimen/secondary_text_size"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/searched_film_border" />
 
             <TextView
                 android:id="@+id/tvCountries"
-                android:padding="5dp"
+                android:padding="@dimen/tv_film_info_padding"
+                android:textSize="@dimen/secondary_text_size"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/searched_film_border" />
 
             <TextView
                 android:id="@+id/tvLanguage"
+                android:textColor="@color/black"
+                android:padding="@dimen/tv_film_info_padding"
+                android:textSize="@dimen/secondary_text_size"
                 android:layout_width="match_parent"
-                android:padding="5dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/searched_film_border" />
 
@@ -79,16 +89,31 @@
 
     <TextView
         android:id="@+id/tvPlot"
-        android:padding="10dp"
-        android:background="@drawable/searched_film_border"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/searched_film_border"
         android:inputType="textMultiLine"
+        android:textSize="@dimen/secondary_text_size"
+        android:textColor="@color/black"
+        android:padding="@dimen/tv_film_info_padding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llImgAndInfo"
-        tools:ignore="TextViewEdits" />
+        tools:ignore="TextViewEdits,SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back_to_the_list"
+        android:textColor="@color/black"
+        android:textSize="@dimen/secondary_text_size"
+        android:backgroundTint="@color/secondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPlot" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

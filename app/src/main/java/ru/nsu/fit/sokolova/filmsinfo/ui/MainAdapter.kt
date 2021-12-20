@@ -36,14 +36,13 @@ class MainAdapter (
 	}
 
 	override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-		val title = holder.itemView.findViewById<TextView>(R.id.tvFilmTitle)
 		val currentFilm = filmList[position]
+
+		val title = holder.itemView.findViewById<TextView>(R.id.tvFilmTitle)
 		title.setText(currentFilm.title)
 
 		val description = holder.itemView.findViewById<TextView>(R.id.tvFilmDescription)
-		//change to film description
 		description.setText(currentFilm.description)
-		//description.text = filmList[position].year + "," + filmList[position].type
 
 		val isWatched = holder.itemView.findViewById<CheckBox>(R.id.cbWatched)
 		isWatched.setChecked(currentFilm.isWatched)

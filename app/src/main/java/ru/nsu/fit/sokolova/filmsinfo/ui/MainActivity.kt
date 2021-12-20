@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 			supportFragmentManager
 				.beginTransaction()
 				.add(R.id.fragmentHolder, mainFragment, "main fragment")
+				.addToBackStack(null)
 				.commit()
 		}
 	}
