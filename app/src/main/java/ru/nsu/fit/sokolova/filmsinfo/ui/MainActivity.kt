@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 		inputDialog = FilmInutDialog(context = this, view = inputDialogView, onSearchButtonClick = {
 			val filmTitle = inputDialog.getUserInput();
 			inputDialog.dismiss()
-			var searchedFilms = ArrayList<SearchedFilm>()
+			var searchedFilms: ArrayList<SearchedFilm> = ArrayList()
 			viewModel.getSearchResult(filmTitle).observe(this, Observer {
 				//progressBar.showIf { result is Resource.Loading
 				it?.let {
@@ -47,17 +47,17 @@ class MainActivity : AppCompatActivity() {
 					if (!searchedFilms.isEmpty()) {
 						selectListAdapter =
 							SelectListAdapter({ selectedFilm: SearchedFilm ->
-								View.OnClickListener {
-									//add -> in viewModel
-									//films.add(selectedFilm.toFilmInList())
-									viewModel.addFilm(selectedFilm)
-									selectFilmDialog.dismiss()
-									mainAdapter.setFilmList(viewModel.getFilmList().value?: emptyList())
-									mainAdapter.notifyItemInserted(mainAdapter.itemCount)
-								}
+												  run {
+													  viewModel.addFilm(selectedFilm)
+													  selectFilmDialog.dismiss()
+													  mainAdapter.setFilmList(
+														  viewModel.getFilmList().value
+															  ?: emptyList()
+													  )
+													  mainAdapter.notifyItemInserted(mainAdapter.itemCount)
+												  }
 							})
 						selectListAdapter.setFilmList(searchedFilms)
-
 						selectFilmDialog = SelectFilmDialog(dialogContext = this@MainActivity, selectListAdapter)
 						selectFilmDialog.show()
 					}

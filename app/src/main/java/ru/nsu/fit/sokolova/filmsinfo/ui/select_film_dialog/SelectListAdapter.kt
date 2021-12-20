@@ -10,8 +10,7 @@ import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 
 class SelectListAdapter(
-	//private val searchedFilms: List<SearchedFilm>,
-	private val onSelectedFilmClick: (SearchedFilm) -> View.OnClickListener
+	private val onSelectedFilmClick: (SearchedFilm) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	private var searchedFilms = emptyList<SearchedFilm>()
 
