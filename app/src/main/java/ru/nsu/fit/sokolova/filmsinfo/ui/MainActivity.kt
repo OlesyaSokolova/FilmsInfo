@@ -63,8 +63,6 @@ class MainActivity : AppCompatActivity() {
 					}
 				}
 			})
-			//val searchedFilms = viewModel.searchByTitle(filmTitle)
-
 		})
 
 		addFilmButton = findViewById(R.id.btnAddFilm)

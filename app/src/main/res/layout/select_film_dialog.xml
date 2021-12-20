@@ -12,8 +12,6 @@
         android:id="@+id/etFilmTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/input_film_dialog_hint"
-        android:text="Select film"
         android:textSize="@dimen/primary_text_size"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/rvSearchedFilms"
