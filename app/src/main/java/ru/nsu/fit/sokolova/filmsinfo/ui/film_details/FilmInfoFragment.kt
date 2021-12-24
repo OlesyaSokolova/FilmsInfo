@@ -100,14 +100,6 @@ class FilmInfoFragment : Fragment() {
 						is Resource.Success -> {
 							filmInfo = result.data
 
-							//val img = view.findViewById<ImageView>(R.id.ivPoster)
-							/*img.setImageDrawable(
-							loadImageFromWeb(
-								filmInfo.image,
-								filmInfo.imdbTitleId.toString()
-							)
-						);*/
-
 							var textLabel: String
 							var textToSet: String
 
