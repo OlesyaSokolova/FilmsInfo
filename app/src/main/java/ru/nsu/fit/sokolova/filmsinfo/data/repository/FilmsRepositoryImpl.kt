@@ -72,6 +72,10 @@ class FilmsRepositoryImpl(
 		GlobalScope.launch { localDataSource.insertFilmInfo(filmInfo.toFilmInfoEntity()) }
 	}
 
+	override fun deleteAllInfos() {
+		GlobalScope.launch {localDataSource.deleteAllInfos() }
+	}
+
 	override fun updateFilmStatus(imdbTitleId: String, isWatched: Boolean) {
 		GlobalScope.launch { localDataSource.updateFilmStatus(imdbTitleId, isWatched) }
 	}

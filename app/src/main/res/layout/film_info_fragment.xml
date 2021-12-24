@@ -28,9 +28,12 @@ android:layout_height="match_parent"
 
         <ImageView
             android:id="@+id/ivPoster"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_width="@dimen/film_info_image_width"
+            android:layout_height="@dimen/film_info_image_width"
+            android:layout_margin="@dimen/film_info_image_margin"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true" />
 
         <LinearLayout
             android:id="@+id/llInfo"
@@ -120,6 +123,7 @@ android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@+id/llImgAndInfo"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="@dimen/film_info_title_size"
+        android:layout_marginBottom="@dimen/film_info_title_margin"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

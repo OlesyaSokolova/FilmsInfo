@@ -9,32 +9,12 @@ interface FilmInfoDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun insertFilmInfo(info: FilmInfoEntity)
 
-	/*@Update(onConflict = OnConflictStrategy.REPLACE)
-	suspend fun updateFilmInfo(info: FilmInfoEntity)*/
-
 	//deleting everything
 	@Query("DELETE FROM filminfoentity WHERE title IN(:titles) ")
 	suspend fun delete(titles: List<String>)
 
 	@Query("DELETE FROM filminfoentity WHERE imdbTitleId = :imdbTitleId ")
 	suspend fun deleteByImdbTitleId(imdbTitleId: String)
-
-	//Fields: id, imdbTitleId, title and isWatched are not deleted
-	@Query("UPDATE	filminfoentity SET " +
-				   "originalTitle = null," +
-				   "fullTitle = null," +
-				   "type = null," +
-				   "year = null," +
-				   "runtimeStr = null," +
-				   "image = null," +
-				   "plot = null," +
-				   "directors = null," +
-				   "stars = null," +
-				   "genres = null," +
-				   "countries = null," +
-				   "languages = null," +
-				   "imDbRating = null")
-	suspend fun deleteFilmInfos()
 
 	@Query("SELECT * FROM filminfoentity")
 	suspend fun getAll(): List<FilmInfoEntity>
@@ -64,6 +44,6 @@ interface FilmInfoDao {
 							   imDbRating: String,
 							   imdbTitleId: String)
 
-	@Query("UPDATE filminfoentity SET originalTitle = null, fullTitle = null, type = null, year = null, runtimeStr = null, image = null, plot = null, directors = null, stars = null, genres = null, countries = null, languages = null, imDbRating = null WHERE imdbTitleId = :imdbTitleId")
-	suspend fun deleteInfo(imdbTitleId: String)
+	@Query("UPDATE filminfoentity SET originalTitle = null, fullTitle = null, type = null, year = null, runtimeStr = null, image = null, plot = null, directors = null, stars = null, genres = null, countries = null, languages = null, imDbRating = null")
+	suspend fun deleteAllInfos()
 }

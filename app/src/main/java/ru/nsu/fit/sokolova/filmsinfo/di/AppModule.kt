@@ -52,6 +52,12 @@ object AppModule {
 
 	@Provides
 	@Singleton
+	fun provideDeleteAllInfosUseCase(repository: FilmsRepository): DeleteAllInfosUseCase {
+		return DeleteAllInfosUseCase(repository)
+	}
+
+	@Provides
+	@Singleton
 	fun provideFilmsRepository(
 		db: FilmsDatabase,
 		api: IMDbApi
@@ -65,7 +71,6 @@ object AppModule {
 		return Room.databaseBuilder(
 			app, FilmsDatabase::class.java, "films_db"
 		).build()
-	//.addTypeConverter(Converters(GsonParser(Gson)))
 	}
 
 	@Provides

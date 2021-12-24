@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -32,7 +33,6 @@ class ListFragment : Fragment () {
 	private val viewModel: ListViewModel by viewModels()
 	private var films = arrayListOf<FilmInList>()
 	private lateinit var listAdapter: ListAdapter
-	//private lateinit var selectListAdapter: SelectListAdapter
 	private lateinit var addFilmButton: FloatingActionButton
 	private lateinit var inputDialog: FilmInutDialog
 	private lateinit var selectFilmDialog: SelectFilmDialog
@@ -77,7 +77,6 @@ class ListFragment : Fragment () {
 															  viewModel.addFilm(selectedFilm)
 															  selectFilmDialog.dismiss()
 															  updateFilmList()
-															  //selectListAdapter.clearSelectionList()
 														  }
 													  })
 								selectListAdapter.setFilmList(searchedFilms)
@@ -91,8 +90,7 @@ class ListFragment : Fragment () {
 
 						is Resource.Failure -> {
 							progressBar?.visibility = View.INVISIBLE
-							//showToast(result.exception.messa
-							//showTost ("error")
+							Toast.makeText(currentContext, result.exception.message + ".\nCheck your internet connection.", Toast.LENGTH_LONG).show()
 						}
 					}
 				}
@@ -143,8 +141,7 @@ class ListFragment : Fragment () {
 					}
 					is Resource.Failure -> {
 						progressBar?.visibility = View.INVISIBLE
-						//showToast(result.exception.messa
-						//showTost ("error")
+						Toast.makeText(currentContext,result.exception.message, Toast.LENGTH_LONG).show()
 					}
 				}
 			}

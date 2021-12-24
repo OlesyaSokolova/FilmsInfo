@@ -18,6 +18,7 @@ import ru.nsu.fit.sokolova.filmsinfo.application.ui.MainActivity
 import android.os.AsyncTask
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.flow.collect
@@ -68,7 +69,7 @@ class FilmInfoFragment : Fragment() {
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
 	): View? {
-		return inflater.inflate(R.layout.fragment_film_info, container, false)
+		return inflater.inflate(R.layout.film_info_fragment, container, false)
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -137,9 +138,12 @@ class FilmInfoFragment : Fragment() {
 								if (filmInfo.imDbRating == null) UNKNOWN_CONTENT else filmInfo.imDbRating.toString()
 							rating.setText((textLabel + DELIMITER + textToSet))
 
+							val plot = view.findViewById<TextView>(R.id.tvPlot)
 							if(filmInfo.plot?.isNotBlank() == true && filmInfo.plot?.isNotBlank() == true) {
-								val plot = view.findViewById<TextView>(R.id.tvPlot)
 								plot.setText(filmInfo.plot)
+							}
+							else {
+								plot.setText(UNKNOWN_CONTENT)
 							}
 
 							DownloadImageFromInternet(view.findViewById<ImageView>(R.id.ivPoster)).execute(
@@ -149,8 +153,7 @@ class FilmInfoFragment : Fragment() {
 						}
 						is Resource.Failure -> {
 							progressBar.visibility = View.INVISIBLE
-							//showToast(result.exception.messa
-							//showTost ("error")
+							Toast.makeText(view.context,result.exception.message + "Check your internet connection.", Toast.LENGTH_LONG).show()
 						}
 					}
 				}
