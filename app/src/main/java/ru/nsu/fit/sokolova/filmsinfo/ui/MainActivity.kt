@@ -16,11 +16,7 @@ class MainActivity : AppCompatActivity() {
 
 		val mainFragment = MainFragment()
 		if(savedInstanceState == null) {
-			supportFragmentManager
-				.beginTransaction()
-				.replace(R.id.fragmentHolder, mainFragment, "main fragment")
-				.addToBackStack(null)
-				.commit()
+			replaceFragment(mainFragment, "main fragment")
 		}
 	}
 

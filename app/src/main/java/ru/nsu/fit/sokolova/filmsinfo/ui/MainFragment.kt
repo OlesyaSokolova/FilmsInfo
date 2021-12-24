@@ -11,11 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import ru.nsu.fit.sokolova.filmsinfo.R
+import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
@@ -24,6 +27,7 @@ import ru.nsu.fit.sokolova.filmsinfo.ui.film_details.FilmInfoFragment
 import ru.nsu.fit.sokolova.filmsinfo.ui.input_film_dialog.FilmInutDialog
 import ru.nsu.fit.sokolova.filmsinfo.ui.select_film_dialog.SelectFilmDialog
 import ru.nsu.fit.sokolova.filmsinfo.ui.select_film_dialog.SelectListAdapter
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class MainFragment : Fragment () {
@@ -56,29 +60,39 @@ class MainFragment : Fragment () {
 			val filmTitle = inputDialog.getUserInput();
 			inputDialog.dismiss()
 			var searchedFilms: ArrayList<SearchedFilm> = ArrayList()
-			viewModel.getSearchResult(filmTitle).observe(this, Observer {
-				//progressBar.showIf { result is Resource.Loading
-				it?.let {
-					searchedFilms = ArrayList(it)
-					if (!searchedFilms.isEmpty()) {
-						selectListAdapter =
-							SelectListAdapter({ selectedFilm: SearchedFilm ->
-												  run {
-													  viewModel.addFilm(selectedFilm)
-													  selectFilmDialog.dismiss()
-													  mainAdapter.setFilmList(
-														  viewModel.getFilmList().value
-															  ?: emptyList()
-													  )
-													  mainAdapter.notifyItemInserted(mainAdapter.itemCount)
-												  }
-											  })
-						selectListAdapter.setFilmList(searchedFilms)
-						selectFilmDialog = SelectFilmDialog(dialogContext = currentContext, selectListAdapter)
-						selectFilmDialog.show()
+			viewModel.searchByTitle(filmTitle)
+			lifecycleScope.launch {
+				viewModel.searchResult.collect { result ->                //progressBar.showIf { result is Resource.Loading
+					when (result) {
+						is Resource.Loading -> {
+
+						}
+						is Resource.Success -> {
+							searchedFilms = ArrayList(result.data)
+							if (!searchedFilms.isEmpty()) {
+								selectListAdapter =
+									SelectListAdapter({ selectedFilm: SearchedFilm ->
+														  run {
+															  viewModel.addFilm(selectedFilm)
+															  selectFilmDialog.dismiss()
+															  updateFilmList()
+														  }
+													  })
+								selectListAdapter.setFilmList(searchedFilms)
+								selectFilmDialog = SelectFilmDialog(
+									dialogContext = currentContext, selectListAdapter
+								)
+								selectFilmDialog.show()
+							}
+						}
+
+						is Resource.Failure -> {
+							//showToast(result.exception.messa
+							//showTost ("error")
+						}
 					}
 				}
-			})
+			}
 		})
 
 		addFilmButton = view.findViewById(R.id.btnAddFilm)
@@ -100,16 +114,34 @@ class MainFragment : Fragment () {
 				  viewModel.setFilmAsWatched(imdbTitleId, isWatched)
 			  }
 	    })
-		viewModel.getFilmList().observe(this, Observer {
-			//progressBar.showIf { result is Resource.Loading
-			it?.let {
-				val filmsList = view?.findViewById<RecyclerView>(R.id.rvFilms)
-				films = ArrayList(it)
-				filmsList?.adapter = mainAdapter
-				mainAdapter.setFilmList(it)
-				filmsList?.layoutManager = LinearLayoutManager(context)
-				filmsList?.scrollToPosition(mainAdapter.itemCount - 1)
+
+		updateFilmList()
+	}
+
+	private fun updateFilmList() {
+		lifecycleScope.launch {
+			viewModel.getFilmList()
+			viewModel.filmList.collect { result ->
+				when (result) {
+					is Resource.Loading -> {
+						//progressBar.showIf { result is Resource.Loading
+					}
+					is Resource.Success -> {
+						val filmsList = view?.findViewById<RecyclerView>(R.id.rvFilms)
+						films = ArrayList(result.data)
+						filmsList?.adapter = mainAdapter
+						mainAdapter.setFilmList(films)
+						filmsList?.layoutManager = LinearLayoutManager(context)
+						filmsList?.scrollToPosition(mainAdapter.itemCount - 1)
+					}
+					is Resource.Failure -> {
+						//showToast(result.exception.messa
+						//showTost ("error")
+					}
+				}
 			}
-		})
+		}
+		mainAdapter.notifyItemInserted(
+			mainAdapter.itemCount)
 	}
 }
