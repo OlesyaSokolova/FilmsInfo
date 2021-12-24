@@ -15,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FilmInfoViewModel @Inject constructor(
 	private val getFilmInfoUseCase: GetFilmInfoUseCase,
+	//DO REFACTORING WITH MUTABLE STATE FLOW!!!!
 ): ViewModel()
 {
 	private var filmInfo: MutableLiveData<FilmInfo> = MutableLiveData()
@@ -39,10 +40,5 @@ class FilmInfoViewModel @Inject constructor(
 	fun getFilmInfo(imdbTitleId: String): MutableLiveData<FilmInfo> {
 		loadFilmInfo(imdbTitleId)
 		return filmInfo
-	}
-
-	fun getFilmInfoData(imdbTitleId: String): FilmInfo? {
-		loadFilmInfo(imdbTitleId)
-		return filmInfo.value
 	}
 }
