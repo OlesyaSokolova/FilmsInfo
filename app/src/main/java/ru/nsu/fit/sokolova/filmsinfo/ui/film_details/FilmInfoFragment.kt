@@ -21,8 +21,12 @@ import ru.nsu.fit.sokolova.filmsinfo.ui.MainFragment
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import java.io.InputStream
 import java.lang.Exception
 import java.net.URL
@@ -66,20 +70,6 @@ class FilmInfoFragment : Fragment() {
 		}
 	}
 
-	fun loadImageFromWeb(url: String?, imdbTitle: String): Drawable? {
-		var result: Drawable? = null
-		GlobalScope.launch {
-			try {
-				val inputStream: InputStream = URL(url).getContent() as InputStream
-				result = Drawable.createFromStream(inputStream, imdbTitle)
-			}
-			catch (e: Exception) {
-				e.printStackTrace()
-				null
-			}
-		}
-		return result
-	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -97,65 +87,79 @@ class FilmInfoFragment : Fragment() {
 		val imdbTitleId = arguments?.getString(IMDB_TITLE_ID_KEY);
 		if (imdbTitleId != null) {
 			var filmInfo: FilmInfo
-			//var filmInfo = viewModel.getFilmInfoData(imdbTitleId)
-			viewModel.getFilmInfo(imdbTitleId).observe(this, Observer {
-				//progressBar.showIf { result is Resource.Loading
-				it?.let {
-					filmInfo = it
+			viewModel.getFilmInfo(imdbTitleId)
+			lifecycleScope.launch {
+				viewModel.filmInfo.collect { result ->
+					//val progressBar = currentView.findViewById<ProgressBar>(R.id.pbLoadingList)
+					//progressBar?.visibility = View.VISIBLE
+					when (result) {
+						is Resource.Loading -> {
+							//progressBar?.visibility = View.VISIBLE
+						}
+						is Resource.Success -> {
+							filmInfo = result.data
 
-					//val img = view.findViewById<ImageView>(R.id.ivPoster)
-					DownloadImageFromInternet(view.findViewById<ImageView>(R.id.ivPoster)).execute(filmInfo.image)
-					/*img.setImageDrawable(
-						loadImageFromWeb(
-							filmInfo.image,
-							filmInfo.imdbTitleId.toString()
-						)
-					);*/
+							//val img = view.findViewById<ImageView>(R.id.ivPoster)
+							DownloadImageFromInternet(view.findViewById<ImageView>(R.id.ivPoster)).execute(
+								filmInfo.image
+							)
+							/*img.setImageDrawable(
+							loadImageFromWeb(
+								filmInfo.image,
+								filmInfo.imdbTitleId.toString()
+							)
+						);*/
 
-					var textLabel: String
-					var textToSet: String
+							var textLabel: String
+							var textToSet: String
 
-					val title = view.findViewById<TextView>(R.id.tvTitle)
-					textLabel = "Title"
-					textToSet =
-						if (filmInfo.title == null) UNKNOWN_CONTENT else filmInfo.title.toString()
-					title.setText((textLabel + DELIMITER + textToSet))
+							val title = view.findViewById<TextView>(R.id.tvTitle)
+							textLabel = "Title"
+							textToSet = filmInfo.title.toString()
+							title.setText((textLabel + DELIMITER + textToSet))
 
-					val type = view.findViewById<TextView>(R.id.tvType)
-					textLabel = "Type"
-					textToSet =
-						if (filmInfo.type == null) UNKNOWN_CONTENT else filmInfo.type.toString()
-					type.setText((textLabel + DELIMITER + textToSet))
+							val type = view.findViewById<TextView>(R.id.tvType)
+							textLabel = "Type"
+							textToSet =
+								if (filmInfo.type == null) UNKNOWN_CONTENT else filmInfo.type.toString()
+							type.setText((textLabel + DELIMITER + textToSet))
 
-					val year = view.findViewById<TextView>(R.id.tvYear)
-					textLabel = "Year"
-					textToSet =
-						if (filmInfo.year == null) UNKNOWN_CONTENT else filmInfo.year.toString()
-					year.setText((textLabel + DELIMITER + textToSet))
+							val year = view.findViewById<TextView>(R.id.tvYear)
+							textLabel = "Year"
+							textToSet =
+								if (filmInfo.year == null) UNKNOWN_CONTENT else filmInfo.year.toString()
+							year.setText((textLabel + DELIMITER + textToSet))
 
-					val countries =
-						view.findViewById<TextView>(ru.nsu.fit.sokolova.filmsinfo.R.id.tvCountries)
-					textLabel = "Countries"
-					textToSet =
-						if (filmInfo.countries == null) UNKNOWN_CONTENT else filmInfo.countries.toString()
-					countries.setText((textLabel + DELIMITER + textToSet))
+							val countries =
+								view.findViewById<TextView>(ru.nsu.fit.sokolova.filmsinfo.R.id.tvCountries)
+							textLabel = "Countries"
+							textToSet =
+								if (filmInfo.countries == null) UNKNOWN_CONTENT else filmInfo.countries.toString()
+							countries.setText((textLabel + DELIMITER + textToSet))
 
-					val languages = view.findViewById<TextView>(R.id.tvLanguage)
-					textLabel = "Languages"
-					textToSet =
-						if (filmInfo.languages == null) UNKNOWN_CONTENT else filmInfo.languages.toString()
-					languages.setText((textLabel + DELIMITER + textToSet))
+							val languages = view.findViewById<TextView>(R.id.tvLanguage)
+							textLabel = "Languages"
+							textToSet =
+								if (filmInfo.languages == null) UNKNOWN_CONTENT else filmInfo.languages.toString()
+							languages.setText((textLabel + DELIMITER + textToSet))
 
-					val rating = view.findViewById<TextView>(R.id.tvRating)
-					textLabel = "IMdB rating"
-					textToSet =
-						if (filmInfo.imDbRating == null) UNKNOWN_CONTENT else filmInfo.imDbRating.toString()
-					rating.setText((textLabel + DELIMITER + textToSet))
+							val rating = view.findViewById<TextView>(R.id.tvRating)
+							textLabel = "IMdB rating"
+							textToSet =
+								if (filmInfo.imDbRating == null) UNKNOWN_CONTENT else filmInfo.imDbRating.toString()
+							rating.setText((textLabel + DELIMITER + textToSet))
 
-					val plot = view.findViewById<TextView>(R.id.tvPlot)
-					plot.setText(filmInfo.plot)
+							val plot = view.findViewById<TextView>(R.id.tvPlot)
+							plot.setText(filmInfo.plot)
+						}
+						is Resource.Failure -> {
+							//progressBar?.visibility = View.INVISIBLE
+							//showToast(result.exception.messa
+							//showTost ("error")
+						}
+					}
 				}
-			})
+			}
 		}
 	}
 }

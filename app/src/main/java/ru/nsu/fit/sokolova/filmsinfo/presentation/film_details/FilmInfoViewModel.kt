@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
@@ -15,30 +15,17 @@ import javax.inject.Inject
 @HiltViewModel
 class FilmInfoViewModel @Inject constructor(
 	private val getFilmInfoUseCase: GetFilmInfoUseCase,
-	//DO REFACTORING WITH MUTABLE STATE FLOW!!!!
 ): ViewModel()
 {
-	private var filmInfo: MutableLiveData<FilmInfo> = MutableLiveData()
+	private val _filmInfo: MutableStateFlow<Resource<FilmInfo>> = MutableStateFlow(Resource.Loading)
+	val filmInfo: StateFlow<Resource<FilmInfo>> = _filmInfo
 
-	private fun loadFilmInfo(imdbTitleId: String) {
-		getFilmInfoUseCase(imdbTitleId).onEach { result ->
-			when(result) {
-				is Resource.Success -> {
-					filmInfo.value = result.data
-				}
-				is Resource.Failure -> {
-					//show toast with failure
-					filmInfo.value = null
-				}
-				is Resource.Loading -> {
-					//show loading bar
-				}
+	fun getFilmInfo(imdbTitleId: String) {
+
+		viewModelScope.launch {
+			getFilmInfoUseCase(imdbTitleId).collect { result ->
+				_filmInfo.value = result
 			}
-		}.launchIn(viewModelScope)
-	}
-
-	fun getFilmInfo(imdbTitleId: String): MutableLiveData<FilmInfo> {
-		loadFilmInfo(imdbTitleId)
-		return filmInfo
+		}
 	}
 }
