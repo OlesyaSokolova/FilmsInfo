@@ -61,19 +61,21 @@ class FilmsRepositoryImpl(
 	}
 
 	override fun searchFilm(title: String): Flow<Resource<List<SearchedFilm>>> = flow {
-		var searchedFilms: List<SearchedFilm>?  = null
+
 		try {
+			var searchedFilms: List<SearchedFilm>?  = null
 			//get remote film info
 			searchedFilms = remoteDataSource.search(title).toSearchedFilms()
+			if(searchedFilms != null) {
+				emit(Resource.Success(searchedFilms))
+			}
+			else {
+				emit(Resource.Failure(java.lang.Exception("No films with the title!")));
+			}
 		}
 		catch (e: Exception) {
 			emit(Resource.Failure(e))
 		}
-		if(searchedFilms != null) {
-			emit(Resource.Success(searchedFilms))
-		}
-		else {
-			emit(Resource.Failure(java.lang.Exception("No films with the title!")));
-		}
+
 	}
 }

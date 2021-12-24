@@ -9,14 +9,12 @@ import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.title.TitleDto
 import javax.inject.Inject
 
 
-/*
-@ExperimentalCoroutinesApi
+/*@ExperimentalCoroutinesApi
 class RemoteDataSource @Inject constructor(
 	private val api: IMDbApi
 ) {
 	suspend fun getFilmInfoByImdbTitleId(imdbTitleId: String): Flow<Resource<TitleDto>> = flow {
 		emit(Resource.Success(
-			api.getFilmInfoByImdbTitleId(imdbTitleId)?.
-		)
+			api.getFilmInfoByImdbTitleId(imdbTitleId)))
 	}
 }*/
