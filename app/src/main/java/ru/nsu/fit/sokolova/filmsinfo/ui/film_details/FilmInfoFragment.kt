@@ -23,6 +23,7 @@ import android.os.AsyncTask
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -79,7 +80,7 @@ class FilmInfoFragment : Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		val backButton = view.findViewById<Button>(R.id.btnBack)
+		val backButton = view.findViewById<FloatingActionButton>(R.id.btnBack)
 		backButton.setOnClickListener {
 			(activity as MainActivity).returnToPreviousFragment()
 		}
@@ -90,19 +91,16 @@ class FilmInfoFragment : Fragment() {
 			viewModel.getFilmInfo(imdbTitleId)
 			lifecycleScope.launch {
 				viewModel.filmInfo.collect { result ->
-					//val progressBar = currentView.findViewById<ProgressBar>(R.id.pbLoadingList)
-					//progressBar?.visibility = View.VISIBLE
+					val progressBar = view.findViewById<ProgressBar>(R.id.pbLoadingList)
+					progressBar.visibility = View.VISIBLE
 					when (result) {
 						is Resource.Loading -> {
-							//progressBar?.visibility = View.VISIBLE
+							progressBar.visibility = View.VISIBLE
 						}
 						is Resource.Success -> {
 							filmInfo = result.data
 
 							//val img = view.findViewById<ImageView>(R.id.ivPoster)
-							DownloadImageFromInternet(view.findViewById<ImageView>(R.id.ivPoster)).execute(
-								filmInfo.image
-							)
 							/*img.setImageDrawable(
 							loadImageFromWeb(
 								filmInfo.image,
@@ -114,9 +112,14 @@ class FilmInfoFragment : Fragment() {
 							var textToSet: String
 
 							val title = view.findViewById<TextView>(R.id.tvTitle)
-							textLabel = "Title"
 							textToSet = filmInfo.title.toString()
-							title.setText((textLabel + DELIMITER + textToSet))
+							title.setText(textToSet)
+
+							val genre = view.findViewById<TextView>(R.id.tvGenre)
+							textLabel = "Genre"
+							textToSet =
+								if (filmInfo.genres == null) UNKNOWN_CONTENT else filmInfo.genres.toString()
+							genre.setText((textLabel + DELIMITER + textToSet))
 
 							val type = view.findViewById<TextView>(R.id.tvType)
 							textLabel = "Type"
@@ -149,11 +152,18 @@ class FilmInfoFragment : Fragment() {
 								if (filmInfo.imDbRating == null) UNKNOWN_CONTENT else filmInfo.imDbRating.toString()
 							rating.setText((textLabel + DELIMITER + textToSet))
 
-							val plot = view.findViewById<TextView>(R.id.tvPlot)
-							plot.setText(filmInfo.plot)
+							if(filmInfo.plot?.isNotBlank() == true && filmInfo.plot?.isNotBlank() == true) {
+								val plot = view.findViewById<TextView>(R.id.tvPlot)
+								plot.setText(filmInfo.plot)
+							}
+
+							DownloadImageFromInternet(view.findViewById<ImageView>(R.id.ivPoster)).execute(
+								filmInfo.image
+							)
+							progressBar.visibility = View.INVISIBLE
 						}
 						is Resource.Failure -> {
-							//progressBar?.visibility = View.INVISIBLE
+							progressBar.visibility = View.INVISIBLE
 							//showToast(result.exception.messa
 							//showTost ("error")
 						}

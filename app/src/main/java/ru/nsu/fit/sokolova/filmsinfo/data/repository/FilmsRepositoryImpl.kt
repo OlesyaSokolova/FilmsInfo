@@ -9,7 +9,7 @@ import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import ru.nsu.fit.sokolova.filmsinfo.data.local.FilmInfoDao
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.IMDbApi
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.search.toSearchedFilms
-import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.title.toFilmInfoEntity
+import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.title.toFilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
@@ -30,12 +30,7 @@ class FilmsRepositoryImpl(
 			try {
 				//get remote film info
 				val remoteFilmInfo = remoteDataSource.getFilmInfoByImdbTitleId(filmInfo.imdbTitleId)
-				val newEntity = remoteFilmInfo.toFilmInfoEntity()
-				newEntity.isWatched = filmInfo.isWatched
-				localDataSource.deleteByImdbTitleId(filmInfo.imdbTitleId)
-				localDataSource.insertFilmInfo(newEntity)
-				val updatedFilmInfo =  localDataSource.getFilmInfoByImdbTitleId(imdbTitleId).toFilmInfo()
-				emit(Resource.Success(updatedFilmInfo))
+				emit(Resource.Success(remoteFilmInfo.toFilmInfo()))
 			}
 			catch (e: Exception) {
 				emit(Resource.Failure(e))

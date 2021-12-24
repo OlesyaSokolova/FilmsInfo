@@ -1,6 +1,7 @@
 package ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.title
 
 import ru.nsu.fit.sokolova.filmsinfo.data.local.entity.FilmInfoEntity
+import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 
 data class TitleDto(
     val actorList: List<Actor>,
@@ -52,13 +53,13 @@ data class TitleDto(
     val year: String
 )
 //title = film
-fun TitleDto.toFilmInfoEntity(): FilmInfoEntity{
-    return FilmInfoEntity(
+fun TitleDto.toFilmInfo(): FilmInfo{
+    return FilmInfo(
         imdbTitleId = id,
         title = title,
-        description = "",//TODO: don't update description that is already in db
         originalTitle = originalTitle,
         fullTitle = fullTitle,
+        description = "",
         type = type,
         year = year,
         runtimeStr = runtimeStr,
