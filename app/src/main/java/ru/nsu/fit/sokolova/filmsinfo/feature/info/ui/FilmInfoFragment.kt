@@ -1,4 +1,4 @@
-package ru.nsu.fit.sokolova.filmsinfo.ui.film_details
+package ru.nsu.fit.sokolova.filmsinfo.feature.info.ui
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -7,30 +7,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
-import ru.nsu.fit.sokolova.filmsinfo.presentation.film_details.FilmInfoViewModel
-import ru.nsu.fit.sokolova.filmsinfo.ui.MainActivity
-import ru.nsu.fit.sokolova.filmsinfo.ui.MainFragment
-import android.graphics.drawable.Drawable
+import ru.nsu.fit.sokolova.filmsinfo.feature.info.presentation.FilmInfoViewModel
+import ru.nsu.fit.sokolova.filmsinfo.application.ui.MainActivity
 import android.os.AsyncTask
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.nsu.fit.sokolova.filmsinfo.common.Resource
-import java.io.InputStream
 import java.lang.Exception
-import java.net.URL
 
 
 @AndroidEntryPoint

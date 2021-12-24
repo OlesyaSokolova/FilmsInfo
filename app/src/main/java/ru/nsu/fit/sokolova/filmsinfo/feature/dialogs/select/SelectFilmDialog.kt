@@ -1,4 +1,4 @@
-package ru.nsu.fit.sokolova.filmsinfo.ui.select_film_dialog
+package ru.nsu.fit.sokolova.filmsinfo.feature.dialogs.select
 
 import android.app.Dialog
 import android.content.Context

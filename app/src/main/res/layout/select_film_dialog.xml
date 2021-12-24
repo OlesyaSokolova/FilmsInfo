@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="10dp"
 
-    tools:context=".ui.MainActivity">
+    tools:context=".application.ui.MainActivity">
 
     <TextView
         android:id="@+id/etFilmTitle"

@@ -64,6 +64,6 @@ interface FilmInfoDao {
 							   imDbRating: String,
 							   imdbTitleId: String)
 
-	@Query("UPDATE filminfoentity SET originalTitle = null, fullTitle = null, type = :type, year = null, runtimeStr = null, image = null, plot = null, directors = null, stars = null, genres = null, countries = null, languages = null, imDbRating = null WHERE imdbTitleId = :imdbTitleId")
-	suspend fun deleteInfos()
+	@Query("UPDATE filminfoentity SET originalTitle = null, fullTitle = null, type = null, year = null, runtimeStr = null, image = null, plot = null, directors = null, stars = null, genres = null, countries = null, languages = null, imDbRating = null WHERE imdbTitleId = :imdbTitleId")
+	suspend fun deleteInfo(imdbTitleId: String)
 }

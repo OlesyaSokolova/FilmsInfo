@@ -1,6 +1,5 @@
-package ru.nsu.fit.sokolova.filmsinfo.ui
+package ru.nsu.fit.sokolova.filmsinfo.feature.list.ui
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
-import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
-import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
 
-class MainAdapter (
+class ListAdapter (
 	private val itemClickListener: OnSelectedFilmClickListener,
 	private val onCheckedChangeListener: (imdbTitleId: String, isWatched: Boolean) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {

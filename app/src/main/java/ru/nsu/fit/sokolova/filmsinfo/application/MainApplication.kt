@@ -1,4 +1,4 @@
-package ru.nsu.fit.sokolova.filmsinfo
+package ru.nsu.fit.sokolova.filmsinfo.application
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
