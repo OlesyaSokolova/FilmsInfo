@@ -9,13 +9,6 @@ interface FilmInfoDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun insertFilmInfo(info: FilmInfoEntity)
 
-	//deleting everything
-	@Query("DELETE FROM filminfoentity WHERE title IN(:titles) ")
-	suspend fun delete(titles: List<String>)
-
-	@Query("DELETE FROM filminfoentity WHERE imdbTitleId = :imdbTitleId ")
-	suspend fun deleteByImdbTitleId(imdbTitleId: String)
-
 	@Query("SELECT * FROM filminfoentity")
 	suspend fun getAll(): List<FilmInfoEntity>
 
