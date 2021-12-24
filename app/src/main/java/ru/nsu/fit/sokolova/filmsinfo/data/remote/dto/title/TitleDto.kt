@@ -73,3 +73,23 @@ fun TitleDto.toFilmInfo(): FilmInfo{
         imDbRating = imDbRating,
     )
 }
+
+fun TitleDto.toFilmInfoEntity(): FilmInfoEntity {
+    return FilmInfoEntity(
+        imdbTitleId = id,
+        title = title,
+        originalTitle = originalTitle,
+        fullTitle = fullTitle,
+        type = type,
+        year = year,
+        runtimeStr = runtimeStr,
+        image = image,
+        plot = plot,
+        directors = directors,
+        stars = stars,
+        genres = genres,
+        countries = countries,
+        languages = languages,
+        imDbRating = imDbRating,
+    )
+}

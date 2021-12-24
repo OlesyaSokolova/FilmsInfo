@@ -11,7 +11,7 @@ data class FilmInfoEntity(
 	@PrimaryKey(autoGenerate = true) val id: Int? = null,//const
 	val imdbTitleId: String,////const
 	val title: String,////const
-	val description: String,//const
+	var description: String = "",//const
 	val originalTitle: String? = null,
 	val fullTitle: String? = null,
 	val type: String? = null,
@@ -58,5 +58,13 @@ data class FilmInfoEntity(
 			description = description,
 			isWatched = isWatched
 		)
+	}
+
+	fun setNewDescription(newDescription: String) {
+		description = newDescription
+	}
+
+	fun setIsWatched(watched: Boolean) {
+		isWatched = watched
 	}
 }

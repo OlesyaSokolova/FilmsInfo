@@ -10,6 +10,7 @@ import ru.nsu.fit.sokolova.filmsinfo.data.local.FilmInfoDao
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.IMDbApi
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.search.toSearchedFilms
 import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.title.toFilmInfo
+import ru.nsu.fit.sokolova.filmsinfo.data.remote.dto.title.toFilmInfoEntity
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
@@ -30,6 +31,26 @@ class FilmsRepositoryImpl(
 			try {
 				//get remote film info
 				val remoteFilmInfo = remoteDataSource.getFilmInfoByImdbTitleId(filmInfo.imdbTitleId)
+
+				val updatedEntity = remoteFilmInfo.toFilmInfoEntity()
+				updatedEntity.setNewDescription(filmInfo.description)
+				updatedEntity.setIsWatched(filmInfo.isWatched)
+				localDataSource.updateFilmInfo(originalTitle = updatedEntity.originalTitle.toString(),
+					fullTitle = updatedEntity.fullTitle.toString(),
+					runtimeStr = updatedEntity.runtimeStr.toString(),
+					genres = updatedEntity.genres.toString(),
+					year = updatedEntity.year.toString(),
+					type = updatedEntity.type.toString(),
+					countries = updatedEntity.countries.toString(),
+					directors = updatedEntity.directors.toString(),
+					imdbTitleId = updatedEntity.imdbTitleId,
+					imDbRating = updatedEntity.imDbRating.toString(),
+					image = updatedEntity.image.toString(),
+					plot = updatedEntity.plot.toString(),
+					languages = updatedEntity.languages.toString(),
+					stars = updatedEntity.stars.toString()
+				)
+
 				emit(Resource.Success(remoteFilmInfo.toFilmInfo()))
 			}
 			catch (e: Exception) {

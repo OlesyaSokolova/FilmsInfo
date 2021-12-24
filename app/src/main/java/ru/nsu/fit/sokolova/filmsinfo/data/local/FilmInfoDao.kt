@@ -9,7 +9,7 @@ interface FilmInfoDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun insertFilmInfo(info: FilmInfoEntity)
 
-	/*@Update
+	/*@Update(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun updateFilmInfo(info: FilmInfoEntity)*/
 
 	//deleting everything
@@ -45,4 +45,20 @@ interface FilmInfoDao {
 
 	@Query("UPDATE filminfoentity SET isWatched = :isWatched WHERE imdbTitleId = :imdbTitleId")
 	suspend fun updateFilmStatus(imdbTitleId: String, isWatched: Boolean)
+
+	@Query("UPDATE filminfoentity SET originalTitle = :originalTitle, fullTitle = :fullTitle, type = :type, year =:year, runtimeStr =:runtimeStr, image =:image, plot= :plot, directors = :directors, stars = :stars, genres = :genres, countries = :countries, languages = :languages, imDbRating = :imDbRating WHERE imdbTitleId = :imdbTitleId")
+	suspend fun updateFilmInfo(originalTitle: String,
+							   fullTitle: String,
+							   type: String,
+							   year: String,
+							   runtimeStr: String,
+							   image: String,
+							   plot: String,
+							   directors: String,
+							   stars: String,
+							   genres: String,
+							   countries: String,
+							   languages: String,
+							   imDbRating: String,
+							   imdbTitleId: String)
 }
