@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:scrollbars="vertical"
+    android:id="@+id/rlMain"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<androidx.core.widget.NestedScrollView
+    android:id="@+id/nsvMain"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -103,36 +113,6 @@
         app:layout_constraintTop_toBottomOf="@+id/llImgAndInfo"
         tools:ignore="TextViewEdits,SpeakableTextPresentCheck" />
 
-    <!--<Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/secondary"
-        android:text="@string/back_to_the_list"
-        android:textColor="@color/black"
-        android:textSize="@dimen/film_info_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPlot" />-->
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/marginFAB"
-        android:layout_marginBottom="@dimen/marginFAB"
-        android:backgroundTint="@color/primary"
-        android:contentDescription="@string/btnAddContentDesc"
-        android:src="@drawable/ic_back"
-        app:backgroundTint="@color/secondary"
-        app:borderWidth="3dp"
-        app:layout_anchorGravity="bottom|right|end"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -158,3 +138,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/marginFAB"
+        android:layout_marginBottom="@dimen/marginFAB"
+        android:backgroundTint="@color/primary"
+        android:contentDescription="@string/btnAddContentDesc"
+        android:src="@drawable/ic_back"
+        app:backgroundTint="@color/secondary"
+        app:borderWidth="3dp"
+        app:layout_anchor="@id/nsvMain"
+        app:layout_anchorGravity="bottom|right|end"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</RelativeLayout>
