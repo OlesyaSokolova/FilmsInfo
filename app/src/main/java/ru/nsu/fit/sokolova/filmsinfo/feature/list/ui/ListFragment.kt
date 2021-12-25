@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.collect
 import ru.nsu.fit.sokolova.filmsinfo.application.ui.MainActivity
 
 @AndroidEntryPoint
-class ListFragment : Fragment () {
+class ListFragment : Fragment() {
 	private lateinit var currentContext: Context
 	private val viewModel: ListViewModel by viewModels()
 	private var films = arrayListOf<FilmInList>()
@@ -42,6 +42,7 @@ class ListFragment : Fragment () {
 		super.onAttach(context)
 		currentContext = context
 	}
+
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
 	): View? {
@@ -54,46 +55,51 @@ class ListFragment : Fragment () {
 		initData()
 
 		val inputDialogView = getLayoutInflater().inflate(R.layout.add_film_input, null)
-		inputDialog = FilmInutDialog(context = currentContext, view = inputDialogView, onSearchButtonClick = {
-			val filmTitle = inputDialog.getUserInput();
-			inputDialog.dismiss()
+		inputDialog =
+			FilmInutDialog(context = currentContext, view = inputDialogView, onSearchButtonClick = {
+				val filmTitle = inputDialog.getUserInput();
+				inputDialog.dismiss()
 
-			viewModel.searchByTitle(filmTitle)
-			lifecycleScope.launch {
-				viewModel.searchResult.collect { result ->
-					val progressBar = currentView.findViewById<ProgressBar>(R.id.pbLoadingList)
-					progressBar?.visibility = View.VISIBLE
-					when (result) {
-						is Resource.Loading -> {
-							progressBar?.visibility = View.VISIBLE
-						}
-						is Resource.Success -> {
-							var searchedFilms: ArrayList<SearchedFilm> = ArrayList()
-							searchedFilms = ArrayList(result.data)
-							if (!searchedFilms.isEmpty()) {
-								val selectListAdapter =
-									SelectListAdapter({ selectedFilm: SearchedFilm ->
-															  viewModel.addFilm(selectedFilm)
-														      selectFilmDialog.cancel()
-															  updateFilmList()
-													  })
-								selectListAdapter.setFilmList(searchedFilms)
-								selectFilmDialog = SelectFilmDialog(
-									dialogContext = currentContext, selectListAdapter
-								)
-								progressBar?.visibility = View.INVISIBLE
-								selectFilmDialog.show()
+				viewModel.searchByTitle(filmTitle)
+				lifecycleScope.launch {
+					viewModel.searchResult.collect { result ->
+						val progressBar = currentView.findViewById<ProgressBar>(R.id.pbLoadingList)
+						progressBar?.visibility = View.VISIBLE
+						when (result) {
+							is Resource.Loading -> {
+								progressBar?.visibility = View.VISIBLE
 							}
-						}
+							is Resource.Success -> {
+								var searchedFilms: ArrayList<SearchedFilm> = ArrayList()
+								searchedFilms = ArrayList(result.data)
+								if (!searchedFilms.isEmpty()) {
+									val selectListAdapter =
+										SelectListAdapter({ selectedFilm: SearchedFilm ->
+															  viewModel.addFilm(selectedFilm)
+															  selectFilmDialog.cancel()
+															  updateFilmList()
+														  })
+									selectListAdapter.setFilmList(searchedFilms)
+									selectFilmDialog = SelectFilmDialog(
+										dialogContext = currentContext, selectListAdapter
+									)
+									progressBar?.visibility = View.INVISIBLE
+									selectFilmDialog.show()
+								}
+							}
 
-						is Resource.Failure -> {
-							progressBar?.visibility = View.INVISIBLE
-							Toast.makeText(getActivity(), result.exception.message + ".\nCheck your internet connection.", Toast.LENGTH_LONG).show()
+							is Resource.Failure -> {
+								progressBar?.visibility = View.INVISIBLE
+								Toast.makeText(
+									getActivity(),
+									result.exception.message + ".\nCheck your internet connection.",
+									Toast.LENGTH_LONG
+								).show()
+							}
 						}
 					}
 				}
-			}
-		})
+			})
 
 		addFilmButton = view.findViewById(R.id.btnAddFilm)
 		addFilmButton.setOnClickListener {
@@ -103,14 +109,16 @@ class ListFragment : Fragment () {
 
 	private fun initData() {
 
-		listAdapter = ListAdapter(itemClickListener = object: ListAdapter.OnSelectedFilmClickListener  {
-			override fun onSelectedFilmClick(filmInList: FilmInList) {
-				val fragment = FilmInfoFragment.newInstance(imdbTitleId = filmInList.imdbTitleId)
-				(activity as MainActivity).replaceFragment(fragment, "film detailed info")
-			}
-		}, { imdbTitleId: String, isWatched: Boolean ->
-				  viewModel.setFilmAsWatched(imdbTitleId, isWatched)
-	    })
+		listAdapter =
+			ListAdapter(itemClickListener = object : ListAdapter.OnSelectedFilmClickListener {
+				override fun onSelectedFilmClick(filmInList: FilmInList) {
+					val fragment =
+						FilmInfoFragment.newInstance(imdbTitleId = filmInList.imdbTitleId)
+					(activity as MainActivity).replaceFragment(fragment, "film detailed info")
+				}
+			}, { imdbTitleId: String, isWatched: Boolean ->
+							viewModel.setFilmAsWatched(imdbTitleId, isWatched)
+						})
 
 		updateFilmList()
 	}
@@ -136,12 +144,14 @@ class ListFragment : Fragment () {
 					}
 					is Resource.Failure -> {
 						progressBar?.visibility = View.INVISIBLE
-						Toast.makeText(getActivity() ,result.exception.message, Toast.LENGTH_LONG).show()
+						Toast.makeText(getActivity(), result.exception.message, Toast.LENGTH_LONG)
+							.show()
 					}
 				}
 			}
 		}
 		listAdapter.notifyItemInserted(
-			listAdapter.itemCount)
+			listAdapter.itemCount
+		)
 	}
 }

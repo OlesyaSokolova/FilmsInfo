@@ -6,7 +6,7 @@ import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
 import ru.nsu.fit.sokolova.filmsinfo.domain.repository.FilmsRepository
 
-class SearchFilmUseCase (
+class SearchFilmUseCase(
 	private val repository: FilmsRepository
 ) {
 	operator fun invoke(title: String): Flow<Resource<List<SearchedFilm>>> {

@@ -9,36 +9,33 @@ import android.widget.EditText
 import ru.nsu.fit.sokolova.filmsinfo.R
 
 class FilmInutDialog(
-    context: Context,
-    view: View,
-    onSearchButtonClick: View.OnClickListener
-) : Dialog(context)
-{
-    private var userInput: EditText
+	context: Context, view: View, onSearchButtonClick: View.OnClickListener
+) : Dialog(context) {
+	private var userInput: EditText
 
-    fun getUserInput(): String {
-        return userInput.text.toString()
-    }
+	fun getUserInput(): String {
+		return userInput.text.toString()
+	}
 
-    init{
-        super.setCanceledOnTouchOutside(true)
-        setContentView(view)
-        setTitle(R.string.input_film_title)
+	init {
+		super.setCanceledOnTouchOutside(true)
+		setContentView(view)
+		setTitle(R.string.input_film_title)
 
-        userInput = view.findViewById<EditText>(R.id.etFilmTitle)
-        userInput.requestFocus()
+		userInput = view.findViewById<EditText>(R.id.etFilmTitle)
+		userInput.requestFocus()
 
-        val btnSave = view.findViewById<Button>(R.id.btnFilmInputSearch)
-        btnSave.setOnClickListener(onSearchButtonClick)
+		val btnSave = view.findViewById<Button>(R.id.btnFilmInputSearch)
+		btnSave.setOnClickListener(onSearchButtonClick)
 
-        val btnCancel = view.findViewById<Button>(R.id.btnFilmInputCancel)
-        btnCancel.setOnClickListener{
-            this.cancel()
-        }
-    }
+		val btnCancel = view.findViewById<Button>(R.id.btnFilmInputCancel)
+		btnCancel.setOnClickListener {
+			this.cancel()
+		}
+	}
 
-    override fun dismiss() {
-        userInput.getText().clear()
-        super.dismiss()
-    }
+	override fun dismiss() {
+		userInput.getText().clear()
+		super.dismiss()
+	}
 }

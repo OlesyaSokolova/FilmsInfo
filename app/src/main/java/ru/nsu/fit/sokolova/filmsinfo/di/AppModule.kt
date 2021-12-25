@@ -59,8 +59,7 @@ object AppModule {
 	@Provides
 	@Singleton
 	fun provideFilmsRepository(
-		db: FilmsDatabase,
-		api: IMDbApi
+		db: FilmsDatabase, api: IMDbApi
 	): FilmsRepository {
 		return FilmsRepositoryImpl(api, db.dao)
 	}
@@ -76,10 +75,7 @@ object AppModule {
 	@Provides
 	@Singleton
 	fun provideFilmsInfoApi(): IMDbApi {
-		return Retrofit.Builder()
-			.baseUrl(IMDbApi.BASE_URL)
-			.addConverterFactory(GsonConverterFactory.create())
-			.build()
-			.create(IMDbApi::class.java)
+		return Retrofit.Builder().baseUrl(IMDbApi.BASE_URL)
+			.addConverterFactory(GsonConverterFactory.create()).build().create(IMDbApi::class.java)
 	}
 }

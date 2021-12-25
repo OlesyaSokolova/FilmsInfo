@@ -1,10 +1,7 @@
 package ru.nsu.fit.sokolova.filmsinfo.domain.model
 
 data class FilmInList(
-	val imdbTitleId: String,
-	val description: String,
-	val title: String,
-	var isWatched: Boolean
+	val imdbTitleId: String, val description: String, val title: String, var isWatched: Boolean
 ) {
 	fun toFilmInfo(): FilmInfo {
 		return FilmInfo(

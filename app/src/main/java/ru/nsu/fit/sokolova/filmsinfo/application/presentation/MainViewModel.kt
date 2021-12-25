@@ -16,8 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
 	private val deleteAllInfosUseCase: DeleteAllInfosUseCase,
-): ViewModel()
-{
+) : ViewModel() {
 	fun clearCache() {
 		deleteAllInfosUseCase()
 	}

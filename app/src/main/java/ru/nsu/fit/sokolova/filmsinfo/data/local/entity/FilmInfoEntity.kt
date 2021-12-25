@@ -9,7 +9,7 @@ import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInfo
 data class FilmInfoEntity(
 	//some fields should not be updated
 	@PrimaryKey(autoGenerate = true) val id: Int? = null,//const
-    val imdbTitleId: String,////const
+	val imdbTitleId: String,////const
 	val title: String,////const
 	var description: String = "",//const
 	val originalTitle: String? = null,

@@ -7,11 +7,10 @@ import ru.nsu.fit.sokolova.filmsinfo.data.local.entity.FilmInfoEntity
 
 
 @Database(
-	entities = [FilmInfoEntity::class],
-	version = 1
+	entities = [FilmInfoEntity::class], version = 1
 )
 
 @TypeConverters
-abstract class FilmsDatabase: RoomDatabase() {
+abstract class FilmsDatabase : RoomDatabase() {
 	abstract val dao: FilmInfoDao
 }

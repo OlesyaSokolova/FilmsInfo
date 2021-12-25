@@ -21,13 +21,9 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import ru.nsu.fit.sokolova.filmsinfo.common.Resource
-import ru.nsu.fit.sokolova.filmsinfo.feature.info.ImageLoader
 import java.lang.Exception
 
 
@@ -51,7 +47,8 @@ class FilmInfoFragment : Fragment() {
 
 	@SuppressLint("StaticFieldLeak")
 	@Suppress("DEPRECATION")
-	private inner class DownloadImageFromInternet(var imageView: ImageView) : AsyncTask<String, Void, Bitmap?>() {
+	private inner class DownloadImageFromInternet(var imageView: ImageView) :
+			AsyncTask<String, Void, Bitmap?>() {
 		var currentException: Exception = Exception("no image provided")
 		val progressBar = view?.findViewById<ProgressBar>(R.id.pbLoadingList)
 		override fun doInBackground(vararg urls: String): Bitmap? {
@@ -61,7 +58,8 @@ class FilmInfoFragment : Fragment() {
 				val imageURL = urls[0]
 				val `in` = java.net.URL(imageURL).openStream()
 				image = BitmapFactory.decodeStream(`in`)
-			} catch (e: Exception) {
+			}
+			catch (e: Exception) {
 				currentException = e
 			}
 			return image
@@ -69,7 +67,7 @@ class FilmInfoFragment : Fragment() {
 
 		override fun onPostExecute(result: Bitmap?) {
 
-			if(result == null) {
+			if (result == null) {
 				progressBar?.visibility = View.INVISIBLE
 				Toast.makeText(
 					getActivity(),
@@ -166,8 +164,9 @@ class FilmInfoFragment : Fragment() {
 							}
 
 							if (filmInfo.image != null) {
-									DownloadImageFromInternet(view.findViewById(R.id.ivPoster)).execute(
-										filmInfo.image)
+								DownloadImageFromInternet(view.findViewById(R.id.ivPoster)).execute(
+									filmInfo.image
+								)
 							}
 							else {
 								progressBar.visibility = View.INVISIBLE
@@ -180,7 +179,11 @@ class FilmInfoFragment : Fragment() {
 						}
 						is Resource.Failure -> {
 							progressBar.visibility = View.INVISIBLE
-							Toast.makeText(getActivity(),result.exception.message + "\nCheck your internet connection.", Toast.LENGTH_LONG).show()
+							Toast.makeText(
+								getActivity(),
+								result.exception.message + "\nCheck your internet connection.",
+								Toast.LENGTH_LONG
+							).show()
 						}
 					}
 				}

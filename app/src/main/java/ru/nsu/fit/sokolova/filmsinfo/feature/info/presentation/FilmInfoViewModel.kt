@@ -13,8 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FilmInfoViewModel @Inject constructor(
 	private val getFilmInfoUseCase: GetFilmInfoUseCase,
-): ViewModel()
-{
+) : ViewModel() {
 	private val _filmInfo: MutableStateFlow<Resource<FilmInfo>> = MutableStateFlow(Resource.Loading)
 	val filmInfo: StateFlow<Resource<FilmInfo>> = _filmInfo
 

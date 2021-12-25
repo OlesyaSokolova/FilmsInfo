@@ -24,19 +24,7 @@ data class FilmInfo(
 	var isWatched: Boolean = false
 ) {
 	fun hasNoEnoughInfo(): Boolean {
-		return (originalTitle == null
-				|| fullTitle == null
-				|| type == null
-				|| year == null
-				|| runtimeStr == null
-				|| image == null
-				|| plot == null
-				|| directors == null
-				|| stars == null
-				|| genres == null
-				|| countries == null
-				|| languages == null
-				|| imDbRating == null)
+		return (originalTitle == null || fullTitle == null || type == null || year == null || runtimeStr == null || image == null || plot == null || directors == null || stars == null || genres == null || countries == null || languages == null || imDbRating == null)
 	}
 
 	fun toFilmInfoEntity(): FilmInfoEntity {

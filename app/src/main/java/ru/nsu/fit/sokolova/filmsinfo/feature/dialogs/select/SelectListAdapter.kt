@@ -25,9 +25,8 @@ class SelectListAdapter(
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-		val view = LayoutInflater
-			.from(parent.context)
-			.inflate(R.layout.searched_film, parent, false)
+		val view =
+			LayoutInflater.from(parent.context).inflate(R.layout.searched_film, parent, false)
 		return SearchResultViewHolder(view)
 	}
 
@@ -48,5 +47,5 @@ class SelectListAdapter(
 	}
 
 
-	inner class SearchResultViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+	inner class SearchResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

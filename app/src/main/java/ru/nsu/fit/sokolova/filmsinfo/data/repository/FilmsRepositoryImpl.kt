@@ -18,9 +18,8 @@ import ru.nsu.fit.sokolova.filmsinfo.domain.repository.FilmsRepository
 import java.io.IOException
 
 class FilmsRepositoryImpl(
-	private val remoteDataSource: IMDbApi,
-	private val localDataSource: FilmInfoDao
-): FilmsRepository {
+	private val remoteDataSource: IMDbApi, private val localDataSource: FilmInfoDao
+) : FilmsRepository {
 
 	override fun getFilmInfo(imdbTitleId: String): Flow<Resource<FilmInfo>> = flow {
 		emit(Resource.Loading)
@@ -35,7 +34,8 @@ class FilmsRepositoryImpl(
 				val updatedEntity = remoteFilmInfo.toFilmInfoEntity()
 				updatedEntity.setNewDescription(filmInfo.description)
 				updatedEntity.setIsWatched(filmInfo.isWatched)
-				localDataSource.updateFilmInfo(originalTitle = updatedEntity.originalTitle.toString(),
+				localDataSource.updateFilmInfo(
+					originalTitle = updatedEntity.originalTitle.toString(),
 					fullTitle = updatedEntity.fullTitle.toString(),
 					runtimeStr = updatedEntity.runtimeStr.toString(),
 					genres = updatedEntity.genres.toString(),
@@ -79,7 +79,7 @@ class FilmsRepositoryImpl(
 	}
 
 	override fun deleteAllInfos() {
-		GlobalScope.launch {localDataSource.deleteAllInfos() }
+		GlobalScope.launch { localDataSource.deleteAllInfos() }
 	}
 
 	override fun updateFilmStatus(imdbTitleId: String, isWatched: Boolean) {
@@ -89,10 +89,10 @@ class FilmsRepositoryImpl(
 	override fun searchFilm(title: String): Flow<Resource<List<SearchedFilm>>> = flow {
 
 		try {
-			var searchedFilms: List<SearchedFilm>?  = null
+			var searchedFilms: List<SearchedFilm>? = null
 			//get remote film info
 			searchedFilms = remoteDataSource.search(title).toSearchedFilms()
-			if(searchedFilms != null) {
+			if (searchedFilms != null) {
 				emit(Resource.Success(searchedFilms))
 			}
 			else {

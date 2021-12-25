@@ -8,10 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
 
 class SelectFilmDialog(
-	private var dialogContext: Context,
-	private var adapter: SelectListAdapter
-) : Dialog(dialogContext)
-{
+	private var dialogContext: Context, private var adapter: SelectListAdapter
+) : Dialog(dialogContext) {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		val selectDialogView = getLayoutInflater().inflate(R.layout.select_film_dialog, null)

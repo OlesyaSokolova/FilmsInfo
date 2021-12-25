@@ -9,26 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 
-class ListAdapter (
+class ListAdapter(
 	private val itemClickListener: OnSelectedFilmClickListener,
 	private val onCheckedChangeListener: (imdbTitleId: String, isWatched: Boolean) -> Unit
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	private var filmList = emptyList<FilmInList>()
 
 	interface OnSelectedFilmClickListener {
 		fun onSelectedFilmClick(filmInList: FilmInList)
 	}
 
-	//@SuppressLint("NotifyDataSetChanged")
 	fun setFilmList(filmList: List<FilmInList>) {
 		this.filmList = filmList
 		notifyDataSetChanged()
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-		val view = LayoutInflater
-			.from(parent.context)
-			.inflate(R.layout.film_thumbnail, parent, false)
+		val view =
+			LayoutInflater.from(parent.context).inflate(R.layout.film_thumbnail, parent, false)
 		return FilmViewHolder(view)
 	}
 
@@ -51,7 +49,8 @@ class ListAdapter (
 			itemClickListener.onSelectedFilmClick(filmList[position])
 		}
 	}
+
 	override fun getItemCount(): Int = filmList.size
 
-	inner class FilmViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+	inner class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }
