@@ -51,14 +51,9 @@ class FilmInfoFragment : Fragment() {
 		override fun doInBackground(vararg urls: String): Bitmap? {
 			val imageURL = urls[0]
 			var image: Bitmap? = null
-			try {
 				val `in` = java.net.URL(imageURL).openStream()
 				image = BitmapFactory.decodeStream(`in`)
-			}
-			catch (e: Exception) {
-				e.printStackTrace()
-			}
-			return image
+				return image
 		}
 		override fun onPostExecute(result: Bitmap?) {
 			imageView.setImageBitmap(result)
@@ -146,14 +141,18 @@ class FilmInfoFragment : Fragment() {
 								plot.setText(UNKNOWN_CONTENT)
 							}
 
-							DownloadImageFromInternet(view.findViewById<ImageView>(R.id.ivPoster)).execute(
-								filmInfo.image
-							)
+							try {
+								DownloadImageFromInternet(view.findViewById<ImageView>(R.id.ivPoster)).execute(
+									filmInfo.image
+								)
+							} catch (e: Exception) {
+								Toast.makeText(view.context, "Error while loading image:\n" + e.message + "\nCheck your internet connection.", Toast.LENGTH_LONG).show()
+							}
 							progressBar.visibility = View.INVISIBLE
 						}
 						is Resource.Failure -> {
 							progressBar.visibility = View.INVISIBLE
-							Toast.makeText(view.context,result.exception.message + "Check your internet connection.", Toast.LENGTH_LONG).show()
+							Toast.makeText(view.context,result.exception.message + "\nCheck your internet connection.", Toast.LENGTH_LONG).show()
 						}
 					}
 				}
