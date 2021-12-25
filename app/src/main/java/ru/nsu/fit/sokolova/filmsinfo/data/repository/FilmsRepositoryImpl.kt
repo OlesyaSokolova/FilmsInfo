@@ -69,7 +69,13 @@ class FilmsRepositoryImpl(
 	}
 
 	override fun addFilm(filmInfo: FilmInfo) {
-		GlobalScope.launch { localDataSource.insertFilmInfo(filmInfo.toFilmInfoEntity()) }
+
+		GlobalScope.launch {
+			val checkInfo = localDataSource.getFilmInfoByImdbTitleId(filmInfo.imdbTitleId)
+			if (checkInfo == null) {
+				localDataSource.insertFilmInfo(filmInfo.toFilmInfoEntity())
+			}
+		}
 	}
 
 	override fun deleteAllInfos() {

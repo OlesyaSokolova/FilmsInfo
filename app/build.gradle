@@ -77,4 +77,6 @@ dependencies {
 
     implementation "androidx.activity:activity-ktx:1.4.0"
     implementation "androidx.fragment:fragment-ktx:1.4.0"
+
+    implementation "org.jetbrains.anko:anko-commons:0.10.0"
 }

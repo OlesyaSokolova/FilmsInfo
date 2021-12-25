@@ -73,11 +73,9 @@ class ListFragment : Fragment () {
 							if (!searchedFilms.isEmpty()) {
 								val selectListAdapter =
 									SelectListAdapter({ selectedFilm: SearchedFilm ->
-														  run {
 															  viewModel.addFilm(selectedFilm)
-															  selectFilmDialog.dismiss()
+														      selectFilmDialog.cancel()
 															  updateFilmList()
-														  }
 													  })
 								selectListAdapter.setFilmList(searchedFilms)
 								selectFilmDialog = SelectFilmDialog(
@@ -90,7 +88,7 @@ class ListFragment : Fragment () {
 
 						is Resource.Failure -> {
 							progressBar?.visibility = View.INVISIBLE
-							Toast.makeText(currentContext, result.exception.message + ".\nCheck your internet connection.", Toast.LENGTH_LONG).show()
+							Toast.makeText(getActivity(), result.exception.message + ".\nCheck your internet connection.", Toast.LENGTH_LONG).show()
 						}
 					}
 				}
@@ -110,11 +108,8 @@ class ListFragment : Fragment () {
 				val fragment = FilmInfoFragment.newInstance(imdbTitleId = filmInList.imdbTitleId)
 				(activity as MainActivity).replaceFragment(fragment, "film detailed info")
 			}
-		},
-								  { imdbTitleId: String, isWatched: Boolean ->
-			  run {
+		}, { imdbTitleId: String, isWatched: Boolean ->
 				  viewModel.setFilmAsWatched(imdbTitleId, isWatched)
-			  }
 	    })
 
 		updateFilmList()
@@ -141,7 +136,7 @@ class ListFragment : Fragment () {
 					}
 					is Resource.Failure -> {
 						progressBar?.visibility = View.INVISIBLE
-						Toast.makeText(currentContext,result.exception.message, Toast.LENGTH_LONG).show()
+						Toast.makeText(getActivity() ,result.exception.message, Toast.LENGTH_LONG).show()
 					}
 				}
 			}

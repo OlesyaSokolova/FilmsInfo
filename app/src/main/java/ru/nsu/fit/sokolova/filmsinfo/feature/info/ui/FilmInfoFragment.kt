@@ -21,9 +21,13 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import ru.nsu.fit.sokolova.filmsinfo.common.Resource
+import ru.nsu.fit.sokolova.filmsinfo.feature.info.ImageLoader
 import java.lang.Exception
 
 
@@ -48,15 +52,35 @@ class FilmInfoFragment : Fragment() {
 	@SuppressLint("StaticFieldLeak")
 	@Suppress("DEPRECATION")
 	private inner class DownloadImageFromInternet(var imageView: ImageView) : AsyncTask<String, Void, Bitmap?>() {
+		var currentException: Exception = Exception("no image provided")
+		val progressBar = view?.findViewById<ProgressBar>(R.id.pbLoadingList)
 		override fun doInBackground(vararg urls: String): Bitmap? {
-			val imageURL = urls[0]
+			progressBar?.visibility = View.VISIBLE
 			var image: Bitmap? = null
+			try {
+				val imageURL = urls[0]
 				val `in` = java.net.URL(imageURL).openStream()
 				image = BitmapFactory.decodeStream(`in`)
-				return image
+			} catch (e: Exception) {
+				currentException = e
+			}
+			return image
 		}
+
 		override fun onPostExecute(result: Bitmap?) {
-			imageView.setImageBitmap(result)
+
+			if(result == null) {
+				progressBar?.visibility = View.INVISIBLE
+				Toast.makeText(
+					getActivity(),
+					"Error while loading image:\n" + currentException.message + "\nCheck your internet connection.",
+					Toast.LENGTH_LONG
+				).show()
+			}
+			else {
+				progressBar?.visibility = View.INVISIBLE
+				imageView.setImageBitmap(result)
+			}
 		}
 	}
 
@@ -134,25 +158,29 @@ class FilmInfoFragment : Fragment() {
 							rating.setText((textLabel + DELIMITER + textToSet))
 
 							val plot = view.findViewById<TextView>(R.id.tvPlot)
-							if(filmInfo.plot?.isNotBlank() == true && filmInfo.plot?.isNotBlank() == true) {
+							if (filmInfo.plot?.isNotBlank() == true && filmInfo.plot?.isNotBlank() == true) {
 								plot.setText(filmInfo.plot)
 							}
 							else {
 								plot.setText(UNKNOWN_CONTENT)
 							}
 
-							try {
-								DownloadImageFromInternet(view.findViewById<ImageView>(R.id.ivPoster)).execute(
-									filmInfo.image
-								)
-							} catch (e: Exception) {
-								Toast.makeText(view.context, "Error while loading image:\n" + e.message + "\nCheck your internet connection.", Toast.LENGTH_LONG).show()
+							if (filmInfo.image != null) {
+									DownloadImageFromInternet(view.findViewById(R.id.ivPoster)).execute(
+										filmInfo.image)
 							}
-							progressBar.visibility = View.INVISIBLE
+							else {
+								progressBar.visibility = View.INVISIBLE
+								Toast.makeText(
+									getActivity(),
+									"Error while loading image:\n" + "no image provided." + "\nCheck your internet connection.",
+									Toast.LENGTH_LONG
+								).show()
+							}
 						}
 						is Resource.Failure -> {
 							progressBar.visibility = View.INVISIBLE
-							Toast.makeText(view.context,result.exception.message + "\nCheck your internet connection.", Toast.LENGTH_LONG).show()
+							Toast.makeText(getActivity(),result.exception.message + "\nCheck your internet connection.", Toast.LENGTH_LONG).show()
 						}
 					}
 				}

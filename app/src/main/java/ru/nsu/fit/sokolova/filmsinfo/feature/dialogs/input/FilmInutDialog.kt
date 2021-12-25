@@ -1,6 +1,7 @@
 package ru.nsu.fit.sokolova.filmsinfo.feature.dialogs.input
 
 import android.app.Dialog
+
 import android.content.Context
 import android.view.View
 import android.widget.Button
@@ -20,6 +21,7 @@ class FilmInutDialog(
     }
 
     init{
+        super.setCanceledOnTouchOutside(true)
         setContentView(view)
         setTitle(R.string.input_film_title)
 

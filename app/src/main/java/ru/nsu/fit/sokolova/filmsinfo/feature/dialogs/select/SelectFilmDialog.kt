@@ -17,10 +17,10 @@ class SelectFilmDialog(
 		val selectDialogView = getLayoutInflater().inflate(R.layout.select_film_dialog, null)
 		val searchedFilmsRecyclerView =
 			selectDialogView.findViewById<RecyclerView>(R.id.rvSearchedFilms)
-		///setTitle("SELECT FILM!!!!!!!")
 		searchedFilmsRecyclerView?.adapter = adapter
 		searchedFilmsRecyclerView.layoutManager = LinearLayoutManager(dialogContext)
 		searchedFilmsRecyclerView.scrollToPosition(adapter.itemCount - 1)
+		super.setCanceledOnTouchOutside(true)
 		setContentView(selectDialogView)
 	}
 

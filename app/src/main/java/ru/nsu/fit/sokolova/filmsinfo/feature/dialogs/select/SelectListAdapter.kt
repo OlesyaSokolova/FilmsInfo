@@ -38,8 +38,6 @@ class SelectListAdapter(
 		val description = holder.itemView.findViewById<TextView>(R.id.tvSearchedFilmDesc)
 		description.text = searchedFilms[position].description
 
-		//TODO: add onClick to every film - save film to db - do it better, write directly to db, use view model
-
 		holder.itemView.setOnClickListener {
 			onSelectedFilmClick(searchedFilms[position])
 		}
