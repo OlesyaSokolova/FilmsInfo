@@ -87,7 +87,14 @@ class ListFragment : Fragment() {
 									progressBar?.visibility = View.INVISIBLE
 									selectFilmDialog.create()
 									selectFilmDialog.show()
-
+								}
+								else {
+									progressBar?.visibility = View.INVISIBLE
+									Toast.makeText(
+										getActivity(),
+										"No films found!",
+										Toast.LENGTH_LONG
+									).show()
 								}
 							}
 
