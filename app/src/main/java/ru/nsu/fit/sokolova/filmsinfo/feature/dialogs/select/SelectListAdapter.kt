@@ -8,19 +8,19 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
+import ru.nsu.fit.sokolova.filmsinfo.feature.list.ui.ListAdapter
 
 class SelectListAdapter(
-	private val onSelectedFilmClick: (SearchedFilm) -> Unit
+	private val itemClickListener: OnSelectedFilmClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	private var searchedFilms = emptyList<SearchedFilm>()
 
-	fun setFilmList(searchedFilms: List<SearchedFilm>) {
-		this.searchedFilms = searchedFilms
-		notifyDataSetChanged()
+	interface OnSelectedFilmClickListener {
+		fun onSelectedFilmClick(searchedFilm: SearchedFilm)
 	}
 
-	fun clearSelectionList() {
-		this.searchedFilms = emptyList<SearchedFilm>()
+	fun setFilmList(searchedFilms: List<SearchedFilm>) {
+		this.searchedFilms = searchedFilms
 		notifyDataSetChanged()
 	}
 
@@ -38,7 +38,7 @@ class SelectListAdapter(
 		description.text = searchedFilms[position].description
 
 		holder.itemView.setOnClickListener {
-			onSelectedFilmClick(searchedFilms[position])
+			itemClickListener.onSelectedFilmClick(searchedFilms[position])
 		}
 	}
 

@@ -73,18 +73,21 @@ class ListFragment : Fragment() {
 								var searchedFilms: ArrayList<SearchedFilm> = ArrayList()
 								searchedFilms = ArrayList(result.data)
 								if (!searchedFilms.isEmpty()) {
-									val selectListAdapter =
-										SelectListAdapter({ selectedFilm: SearchedFilm ->
-															  viewModel.addFilm(selectedFilm)
-															  selectFilmDialog.cancel()
-															  updateFilmList()
-														  })
-									selectListAdapter.setFilmList(searchedFilms)
-									selectFilmDialog = SelectFilmDialog(
-										dialogContext = currentContext, selectListAdapter
-									)
+									val selectFilmDialog = SelectFilmDialog(searchedFilms,
+													 dialogContext = currentContext)
+
+									selectFilmDialog.setAdapter(SelectListAdapter(itemClickListener = object : SelectListAdapter.OnSelectedFilmClickListener {
+										override fun onSelectedFilmClick(searchedFilm: SearchedFilm) {
+											viewModel.addFilm(searchedFilm)
+											selectFilmDialog.dismiss()
+											updateFilmList()
+										}
+									}))
+
 									progressBar?.visibility = View.INVISIBLE
+									selectFilmDialog.create()
 									selectFilmDialog.show()
+
 								}
 							}
 
