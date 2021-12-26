@@ -19,8 +19,8 @@ interface IMDbApi {
 	companion object {
 		const val LANG = "en"
 
-		//const val API_KEY = "k_6t2ujrf5"
-		const val API_KEY = "k_ccojbis7"
+		const val API_KEY = "k_6t2ujrf5"
+		//const val API_KEY = "k_ccojbis7"
 		const val BASE_URL = "https://imdb-api.com/"
 	}
 }

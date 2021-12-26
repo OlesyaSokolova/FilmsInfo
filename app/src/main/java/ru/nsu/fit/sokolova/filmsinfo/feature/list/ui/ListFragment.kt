@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.common.Resource
@@ -73,10 +74,12 @@ class ListFragment : Fragment() {
 								var searchedFilms: ArrayList<SearchedFilm> = ArrayList()
 								searchedFilms = ArrayList(result.data)
 								if (!searchedFilms.isEmpty()) {
-									val selectFilmDialog = SelectFilmDialog(searchedFilms,
-													 dialogContext = currentContext)
+									val selectFilmDialog = SelectFilmDialog(
+										searchedFilms, dialogContext = currentContext
+									)
 
-									selectFilmDialog.setAdapter(SelectListAdapter(itemClickListener = object : SelectListAdapter.OnSelectedFilmClickListener {
+									selectFilmDialog.setAdapter(SelectListAdapter(itemClickListener = object :
+											SelectListAdapter.OnSelectedFilmClickListener {
 										override fun onSelectedFilmClick(searchedFilm: SearchedFilm) {
 											viewModel.addFilm(searchedFilm)
 											selectFilmDialog.dismiss()
@@ -91,9 +94,7 @@ class ListFragment : Fragment() {
 								else {
 									progressBar?.visibility = View.INVISIBLE
 									Toast.makeText(
-										getActivity(),
-										"No films found!",
-										Toast.LENGTH_LONG
+										getActivity(), "No films found!", Toast.LENGTH_LONG
 									).show()
 								}
 							}

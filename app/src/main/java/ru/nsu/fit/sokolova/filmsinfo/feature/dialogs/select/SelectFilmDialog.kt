@@ -10,8 +10,7 @@ import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
 
 class SelectFilmDialog(
-	private val searchedFilms: List<SearchedFilm>,
-	private var dialogContext: Context
+	private val searchedFilms: List<SearchedFilm>, private var dialogContext: Context
 ) : Dialog(dialogContext) {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
