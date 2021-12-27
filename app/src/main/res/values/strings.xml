@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">FilmsInfo</string>
+    <string name="btnAddContentDesc">Button for searching films</string>
+    <string name="input_film_title">Input film title</string>
+    <string name="film_input_cancel">Cancel</string>
+    <string name="search">Search</string>
+    <string name="input_film_dialog_hint">Enter film title</string>
+    <string name="select_searched_film">Select film:</string>
+    <string name="back_to_the_list">Back to the list</string>
 </resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="primary_text_size">18sp</dimen>
+    <dimen name="film_thumbnail_padding">3dp</dimen>
+    <dimen name="marginFAB">32dp</dimen>
+    <dimen name="secondary_text_size">14sp</dimen>
+    <dimen name="tv_film_info_padding">5dp</dimen>
+    <dimen name="film_info_text_size">16sp</dimen>
+    <dimen name="film_info_title_size">20sp</dimen>
+    <dimen name="film_info_image_width">200dp</dimen>
+    <dimen name="film_info_image_height">177dp</dimen>
+    <dimen name="film_info_image_margin">10dp</dimen>
+    <dimen name="film_info_title_margin">10dp</dimen>
+    <item name="tv_film_title_hb" type="dimen" format="float">0.1</item>
+    <item name="tv_film_title_vb" type="dimen" format="float">0.5</item>
+</resources>

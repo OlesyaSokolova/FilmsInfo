@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/rlMain"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/llImgAndInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/tvPlot"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivPoster"
+                    android:layout_width="@dimen/film_info_image_width"
+                    android:layout_height="@dimen/film_info_image_width"
+                    android:layout_margin="@dimen/film_info_image_margin"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_poster_placeholder"
+                    android:scaleType="centerInside"
+                    android:adjustViewBounds="true" />
+
+                <LinearLayout
+                    android:id="@+id/llInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvGenre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/searched_film_border"
+                        android:padding="@dimen/tv_film_info_padding"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/film_info_text_size" />
+
+                    <TextView
+                        android:id="@+id/tvYear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/searched_film_border"
+                        android:padding="@dimen/tv_film_info_padding"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/film_info_text_size" />
+
+                    <TextView
+                        android:id="@+id/tvType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/searched_film_border"
+                        android:padding="@dimen/tv_film_info_padding"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/film_info_text_size" />
+
+                    <TextView
+                        android:id="@+id/tvRating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/searched_film_border"
+                        android:padding="@dimen/tv_film_info_padding"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/film_info_text_size" />
+
+                    <TextView
+                        android:id="@+id/tvCountries"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/searched_film_border"
+                        android:padding="@dimen/tv_film_info_padding"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/film_info_text_size" />
+
+                    <TextView
+                        android:id="@+id/tvLanguage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/searched_film_border"
+                        android:padding="@dimen/tv_film_info_padding"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/film_info_text_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvPlot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/searched_film_border"
+                android:inputType="textMultiLine"
+                android:padding="@dimen/tv_film_info_padding"
+                android:textColor="@color/black"
+                android:textSize="@dimen/film_info_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llImgAndInfo"
+                tools:ignore="TextViewEdits,SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/llImgAndInfo"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="@dimen/film_info_title_size"
+                android:layout_marginBottom="@dimen/film_info_title_margin"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/pbLoadingList"
+                android:theme="@style/ProgressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/marginFAB"
+        android:layout_marginBottom="@dimen/marginFAB"
+        android:backgroundTint="@color/primary"
+        android:contentDescription="@string/btnAddContentDesc"
+        android:src="@drawable/ic_back"
+        app:backgroundTint="@color/secondary"
+        app:borderWidth="3dp"
+        app:layout_anchor="@id/nsvMain"
+        app:layout_anchorGravity="bottom|right|end"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</RelativeLayout>
