@@ -51,6 +51,7 @@ class FilmInfoFragment : Fragment() {
 			AsyncTask<String, Void, Bitmap?>() {
 		var currentException: Exception = Exception("no image provided")
 		val progressBar = view?.findViewById<ProgressBar>(R.id.pbLoadingList)
+
 		override fun doInBackground(vararg urls: String): Bitmap? {
 			progressBar?.visibility = View.VISIBLE
 			var image: Bitmap? = null
@@ -77,7 +78,17 @@ class FilmInfoFragment : Fragment() {
 			}
 			else {
 				progressBar?.visibility = View.INVISIBLE
-				imageView.setImageBitmap(result)
+				try {
+					imageView.setImageBitmap(result)
+				}
+				catch (e: Exception) {
+					progressBar?.visibility = View.INVISIBLE
+					Toast.makeText(
+						getActivity(),
+						"Error while loading image:\n" + currentException.message + "\nCheck your internet connection.",
+						Toast.LENGTH_LONG
+					).show()
+				}
 			}
 		}
 	}

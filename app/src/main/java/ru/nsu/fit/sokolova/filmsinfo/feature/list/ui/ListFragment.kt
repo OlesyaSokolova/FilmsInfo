@@ -36,7 +36,6 @@ class ListFragment : Fragment() {
 	private lateinit var listAdapter: ListAdapter
 	private lateinit var addFilmButton: FloatingActionButton
 	private lateinit var inputDialog: FilmInutDialog
-	private lateinit var selectFilmDialog: SelectFilmDialog
 	private lateinit var currentView: View
 
 	override fun onAttach(context: Context) {
@@ -71,27 +70,21 @@ class ListFragment : Fragment() {
 								progressBar?.visibility = View.VISIBLE
 							}
 							is Resource.Success -> {
-								var searchedFilms: ArrayList<SearchedFilm> = ArrayList()
-								searchedFilms = ArrayList(result.data)
+								var searchedFilms: List<SearchedFilm> = emptyList()
+								searchedFilms = result.data
 								if (!searchedFilms.isEmpty()) {
 									val selectFilmDialog = SelectFilmDialog(
-										searchedFilms, dialogContext = currentContext
-									)
-
-									selectFilmDialog.setAdapter(SelectListAdapter(itemClickListener = object :
-											SelectListAdapter.OnSelectedFilmClickListener {
-										override fun onSelectedFilmClick(searchedFilm: SearchedFilm) {
+										searchedFilms,
+										dialogContext = currentContext,
+									    onFilmClick = {  searchedFilm ->
 											viewModel.addFilm(searchedFilm)
-											selectFilmDialog.dismiss()
-											updateFilmList()
-										}
-									}))
+											updateFilmList() }
+									)
 
 									progressBar?.visibility = View.INVISIBLE
 									selectFilmDialog.create()
 									selectFilmDialog.show()
-								}
-								else {
+								} else {
 									progressBar?.visibility = View.INVISIBLE
 									Toast.makeText(
 										getActivity(), "No films found!", Toast.LENGTH_LONG
@@ -134,7 +127,7 @@ class ListFragment : Fragment() {
 		updateFilmList()
 	}
 
-	private fun updateFilmList() {
+	fun updateFilmList() {
 		lifecycleScope.launch {
 			viewModel.getFilmList()
 			viewModel.filmList.collect { result ->

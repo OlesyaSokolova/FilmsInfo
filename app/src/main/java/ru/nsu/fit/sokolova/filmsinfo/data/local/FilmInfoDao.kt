@@ -18,7 +18,7 @@ interface FilmInfoDao {
 	@Query("UPDATE filminfoentity SET isWatched = :isWatched WHERE imdbTitleId = :imdbTitleId")
 	suspend fun updateFilmStatus(imdbTitleId: String, isWatched: Boolean)
 
-	@Query("UPDATE filminfoentity SET originalTitle = :originalTitle, fullTitle = :fullTitle, type = :type, year =:year, runtimeStr =:runtimeStr, image =:image, plot= :plot, directors = :directors, stars = :stars, genres = :genres, countries = :countries, languages = :languages, imDbRating = :imDbRating WHERE imdbTitleId = :imdbTitleId")
+	@Query("UPDATE filminfoentity SET originalTitle = :originalTitle, fullTitle = :fullTitle, type = :type, year =:year, runtimeStr =:runtimeStr, image =:image, plot= :plot, directors = :directors, stars = :stars, genres = :genres, countries = :countries, languages = :languages, imDbRating = :imDbRating, isWatched = :isWatched WHERE imdbTitleId = :imdbTitleId")
 	suspend fun updateFilmInfo(
 		originalTitle: String,
 		fullTitle: String,
@@ -33,7 +33,8 @@ interface FilmInfoDao {
 		countries: String,
 		languages: String,
 		imDbRating: String,
-		imdbTitleId: String
+		imdbTitleId: String,
+		isWatched: Boolean
 	)
 
 	@Query("UPDATE filminfoentity SET originalTitle = null, fullTitle = null, type = null, year = null, runtimeStr = null, image = null, plot = null, directors = null, stars = null, genres = null, countries = null, languages = null, imDbRating = null")

@@ -8,10 +8,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
+import ru.nsu.fit.sokolova.filmsinfo.feature.list.presentation.ListViewModel
 
 class SelectFilmDialog(
-	private val searchedFilms: List<SearchedFilm>, private var dialogContext: Context
+	private val searchedFilms: List<SearchedFilm>,
+	private var dialogContext: Context,
+	private val onFilmClick: (searchedFilm: SearchedFilm) -> Unit
 ) : Dialog(dialogContext) {
+
+	init {
+		this.setAdapter(SelectListAdapter(itemClickListener = object :
+				SelectListAdapter.OnSelectedFilmClickListener {
+			override fun onSelectedFilmClick(searchedFilm: SearchedFilm) {
+				dismiss()
+				onFilmClick(searchedFilm)
+			}
+		}))
+	}
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		super.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
