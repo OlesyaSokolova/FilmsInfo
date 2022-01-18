@@ -1,26 +1,32 @@
 package ru.nsu.fit.sokolova.filmsinfo.feature.list.ui
 
+import android.content.Context
+import android.graphics.*
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import ru.nsu.fit.sokolova.filmsinfo.R
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 
 class ListAdapter(
 	private val itemClickListener: OnSelectedFilmClickListener,
-	private val onCheckedChangeListener: (imdbTitleId: String, isWatched: Boolean) -> Unit
+	private val onCheckedChangeListener: (imdbTitleId: String, isWatched: Boolean) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-	private var filmList = emptyList<FilmInList>()
+
+	private var filmList = mutableListOf<FilmInList>()
 
 	interface OnSelectedFilmClickListener {
 		fun onSelectedFilmClick(filmInList: FilmInList)
 	}
 
 	fun setFilmList(filmList: List<FilmInList>) {
-		this.filmList = filmList
+		this.filmList = filmList as MutableList<FilmInList>
 		notifyDataSetChanged()
 	}
 
@@ -51,6 +57,14 @@ class ListAdapter(
 	}
 
 	override fun getItemCount(): Int = filmList.size
+	fun getFilmList(): List<FilmInList> {
+		return filmList
+	}
+
+	fun deleteFilm(position: Int) {
+		filmList.removeAt(position)
+		notifyItemRemoved(position)
+	}
 
 	inner class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

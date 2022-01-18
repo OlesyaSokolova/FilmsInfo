@@ -12,6 +12,9 @@ interface FilmInfoDao {
 	@Query("SELECT * FROM filminfoentity")
 	suspend fun getAll(): List<FilmInfoEntity>
 
+	@Query("DELETE FROM filminfoentity WHERE imdbTitleId = :imdbTitleId")
+	suspend fun deleteFilm(imdbTitleId: String)
+
 	@Query("SELECT * FROM filminfoentity WHERE imdbTitleId = :imdbTitleId LIMIT 1")
 	suspend fun getFilmInfoByImdbTitleId(imdbTitleId: String): FilmInfoEntity
 

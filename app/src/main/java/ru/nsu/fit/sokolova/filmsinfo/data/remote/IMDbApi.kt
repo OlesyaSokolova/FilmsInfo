@@ -17,7 +17,7 @@ interface IMDbApi {
 	): TitleDto
 
 	companion object {
-		const val LANG = "en"
+		const val LANG = "ru"
 
 		const val API_KEY = "k_6t2ujrf5"
 		//const val API_KEY = "k_ccojbis7"

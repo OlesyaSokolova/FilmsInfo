@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	override fun onDestroy() {
-		viewModel.clearCache()
+		//viewModel.clearCache()
 		super.onDestroy()
 	}
 }

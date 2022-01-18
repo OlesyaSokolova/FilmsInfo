@@ -102,6 +102,10 @@ class FilmsRepositoryImpl(
 		catch (e: Exception) {
 			emit(Resource.Failure(e))
 		}
+	}
+
+	override fun deleteFilmFilm(imdbTitleId: String) {
+		GlobalScope.launch { localDataSource.deleteFilm(imdbTitleId) }
 
 	}
 }

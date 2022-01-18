@@ -58,6 +58,12 @@ object AppModule {
 
 	@Provides
 	@Singleton
+	fun provideDeleteFilmUseCase(repository: FilmsRepository): DeleteFilmUseCase {
+		return DeleteFilmUseCase(repository)
+	}
+
+	@Provides
+	@Singleton
 	fun provideFilmsRepository(
 		db: FilmsDatabase, api: IMDbApi
 	): FilmsRepository {

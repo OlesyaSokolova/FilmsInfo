@@ -13,4 +13,5 @@ interface FilmsRepository {
 	fun deleteAllInfos()
 	fun updateFilmStatus(imdbTitleId: String, isWatched: Boolean)
 	fun searchFilm(title: String): Flow<Resource<List<SearchedFilm>>>
+    fun deleteFilmFilm(imdbTitleId: String)
 }

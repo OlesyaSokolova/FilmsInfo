@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable-anydpi/ic_add_film.xml" value="0.10555555555555556" />
         <entry key="app/src/main/res/drawable-anydpi/main_list_film_border.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_delete_white_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/placeholder.xml" value="0.3333333333333333" />
         <entry key="app/src/main/res/drawable/searched_film_border.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.264" />

@@ -11,10 +11,7 @@ import kotlinx.coroutines.launch
 import ru.nsu.fit.sokolova.filmsinfo.common.Resource
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.FilmInList
 import ru.nsu.fit.sokolova.filmsinfo.domain.model.SearchedFilm
-import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.AddFilmUseCase
-import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.GetFilmListUseCase
-import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.SearchFilmUseCase
-import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.UpdateFilmStatusUseCase
+import ru.nsu.fit.sokolova.filmsinfo.domain.use_cases.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,6 +20,7 @@ class ListViewModel @Inject constructor(
 	private val searchFilmUseCase: SearchFilmUseCase,
 	private val addFilmUseCase: AddFilmUseCase,
 	private val setFilmAsWatchedUseCase: UpdateFilmStatusUseCase,
+	private val deleteFilmUseCase: DeleteFilmUseCase,
 ) : ViewModel() {
 	private val _filmList: MutableStateFlow<Resource<List<FilmInList>>> =
 		MutableStateFlow(Resource.Success(emptyList()))
@@ -64,5 +62,9 @@ class ListViewModel @Inject constructor(
 
 	fun setFilmAsWatched(imdbTitleId: String, isWatched: Boolean) {
 		setFilmAsWatchedUseCase(imdbTitleId, isWatched)
+	}
+
+	fun deleteFilm(imdbTitleId: String) {
+		deleteFilmUseCase(imdbTitleId)
 	}
 }
